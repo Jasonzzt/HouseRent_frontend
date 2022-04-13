@@ -12,7 +12,7 @@ let result = {
 /*模拟数据库信息*/
 let username = 'ziteng';
 let password = '123456';
-let verityCode = 'lmz是猪';
+let verityCode = 'ar52p';
 
 /**
  * 模拟验证码
