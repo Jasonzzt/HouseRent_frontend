@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <p>你好啊！</p>
+    <p>平台页面（SPA）</p>
 
   </div>
 </template>
