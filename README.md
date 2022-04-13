@@ -1,19 +1,30 @@
 # admin-vue
+### 软工导论课实践（前端部分）：住房租赁平台
+前端框架：vue\
+后端框架：Spring-boot
+### 任务分配
+项目总人数：7人\
+平台项目主管：1人\
+报告撰写：1人\
+前端人数：2人\
+后端人数：2人\
+部署测试：1人
 
-## Project setup
+
+## 项目部署
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### 编译并在部署在本地
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### 编译构建项目并得到项目包
 ```
 npm run build
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## 项目总览
+### 后端项目链接
+<https://github.com/SEUCocoding/>
