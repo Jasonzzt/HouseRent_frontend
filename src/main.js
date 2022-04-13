@@ -18,6 +18,7 @@ import qs from 'qs';
 Vue.prototype.$qs = qs;
 /*引入mock数据*/
 require('./mock/LoginService.js')
+require('./mock/RegisterService.js')
 
 Vue.config.productionTip = false
 

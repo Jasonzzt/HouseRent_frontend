@@ -7,7 +7,7 @@
       <el-col :span="6"></el-col>
       <el-col :span="6">
         <!--标题-->
-        <h1 class="title">登录系统</h1>
+        <h1 class="title">住房租赁平台登录</h1>
       </el-col>
       <el-col :span="6"></el-col>
     </el-row>
@@ -32,18 +32,20 @@
           </el-form-item>
           <el-form-item class="btn-ground">
             <el-button type="primary" @click="submitForm('loginForm')">立即登陆</el-button>
+            <el-button @click="register()">注册用户</el-button>
             <el-button @click="resetForm('loginForm')">重置</el-button>
           </el-form-item>
         </el-form>
       </el-col>
     </el-row>
+
+
   </div>
 </template>
 
 <script>
 import Element from 'element-ui';
 import router from "@/router";
-
 export default {
   name: "Login",
   data() {
@@ -111,6 +113,10 @@ export default {
           return false;
         }
       });
+    },
+    //转入登陆页面
+    register(){
+      router.push('/register')
     },
     // 重置表单
     resetForm(formName) {
