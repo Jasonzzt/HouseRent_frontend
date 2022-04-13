@@ -27,9 +27,6 @@
             <!--验证码图片-->
             <el-image :src="codeImg" class="codeImg"></el-image>
           </el-form-item>
-          <el-form-item label="记住密码" prop="remember">
-            <el-switch v-model="loginForm.remember"></el-switch>
-          </el-form-item>
           <el-form-item class="btn-ground">
             <el-button type="primary" @click="submitForm('loginForm')">立即登陆</el-button>
             <el-button @click="register()">注册用户</el-button>
