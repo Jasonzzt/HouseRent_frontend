@@ -169,9 +169,9 @@ export default {
 .title {
   text-shadow: -3px 3px 1px #5f565e;
   text-align: center;
-  margin-top: 60%;
+  margin-top: 40%;
   color: #41b9a6;
-  font-size: 40px;
+  font-size: 35px;
 }
 
 .login-card {
