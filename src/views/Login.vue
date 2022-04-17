@@ -99,7 +99,7 @@ export default {
               /*登陆成功*/
               Element.Message.success(message);
               /*跳转页面*/
-              router.push('/home')
+              router.push('/index')
             } else {
               /*打印错误信息*/
               Element.Message.error(message);

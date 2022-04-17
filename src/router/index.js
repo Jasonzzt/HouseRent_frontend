@@ -4,6 +4,7 @@ import Home from '../views/HomeView.vue'
 import Login from '../views/Login.vue'
 import Register from  '../views/Register.vue'
 import Index from '../views/Index.vue'
+import Housedata from "@/views/Housedata.vue";
 Vue.use(VueRouter)
 
 const routes = [
@@ -26,11 +27,23 @@ const routes = [
   {
     path: '/index',
     name: 'Index',
-    component: Index
+    component: Index,
+    children:[
+      {
+        path:'/housedata',
+        name:'Housedata',
+        component: Housedata
+      }
+    ]
   },
+
+
+
+
 ]
 
 const router = new VueRouter({
+  mode: 'history',
   routes
 })
 
