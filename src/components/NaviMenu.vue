@@ -4,7 +4,6 @@
         :default-active="activeIndex"
         class="el-menu-demo"
         mode="horizontal"
-        @select="handleSelect"
         background-color="#545c64"
         text-color="#fff"
         active-text-color="#ffd04b"
@@ -12,9 +11,9 @@
     >
 
       <template v-for="item in navMenuData">
-        <el-menu-item :index="item.index" v-if="!item.child">{{item.name}}</el-menu-item>
+        <el-menu-item  :index="item.index" v-if="!item.child">{{item.name}}</el-menu-item>
 
-        <el-submenu :index="item.index" v-if="item.child">
+        <el-submenu :index="item.index" v-if="item.child" >
           <template slot="title">{{item.name}}</template>
           <template v-for="item2 in item.child">
             <el-menu-item :index="item2.index">{{item2.name}}</el-menu-item>
@@ -27,8 +26,10 @@
 </template>
 
 <script>
+
 export default {
   name: "NaviMenu",
+
   data() {
     return {
       activeIndex: "housedata",
@@ -45,17 +46,13 @@ export default {
     };
   },
   methods: {
-    handleSelect(key, keyPath) {
-      //console.log(key, keyPath);
-    }
+
   },
   mounted(){
-    //console.log(this.activeIndex)
-    //console.log(this.$route.path)
-    this.activeIndex = this.$route.path.substring(1,this.$route.path.length);
-
+    document.getElementsByClassName("el-menu-item is-active")[0].click()
   }
 };
+
 </script>
 
 <style scoped>
