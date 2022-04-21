@@ -5,7 +5,7 @@
         <NaviMenu ></NaviMenu>
       </el-header>
       <el-main>
-        <router-view></router-view> <!--路由出口 -->
+        <router-view></router-view>
       </el-main>
       <el-footer>Foot</el-footer>
     </el-container>
