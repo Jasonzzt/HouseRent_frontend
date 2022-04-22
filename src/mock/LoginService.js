@@ -14,6 +14,7 @@ let username = 'ziteng';
 let password = '123456';
 let verityCode = 'ar52u';
 
+
 /**
  * 模拟验证码
  */
