@@ -2,7 +2,7 @@
   <div id="app">
     <el-container>
       <el-header>
-        <NaviMenu ></NaviMenu>
+        <NaviMenu></NaviMenu>
       </el-header>
       <el-main>
         <router-view></router-view>

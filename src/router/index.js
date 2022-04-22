@@ -1,18 +1,15 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/HomeView.vue'
 import Login from '../views/Login.vue'
 import Register from  '../views/Register.vue'
 import Index from '../views/Index.vue'
-import Housedata from "@/views/Housedata.vue";
+import Housedata from "../views/Housedata.vue"
+import UsrInfo from "@/views/UsrInfo.vue"
+import Message from "@/views/Message.vue";
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/home',
-    name: 'Home',
-    component: Home
-  },
+
   // 配置登陆页面的路由
   {
     path: '/',
@@ -33,6 +30,16 @@ const routes = [
         path:'/housedata',
         name:'Housedata',
         component: Housedata
+      },
+      {
+        path:'/usrInfo',
+        name: 'UsrInfo',
+        component: UsrInfo
+      },
+      {
+        path:'/message',
+        name: 'Message',
+        component: Message
       }
     ]
   },

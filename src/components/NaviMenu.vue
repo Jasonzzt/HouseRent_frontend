@@ -20,9 +20,22 @@
           </template>
         </el-submenu>
       </template>
+      <template>
+        <div class="head_portrait">
+          <a href="#/usrInfo" class="user">
+            <span class="user_icon">
+              <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+            </span>
+          </a>
+        </div>
+      </template>
+      <template>
+        <div class="server">
+          <el-button type="text" @click="open" icon="el-icon-s-custom">客服</el-button>
+        </div>
+      </template>
     </el-menu>
   </div>
-
 </template>
 
 <script>
@@ -42,11 +55,28 @@ export default {
           child: [{ index: "2-1", name: "合同期内租房" },{ index: "2-2", name: "已完成租赁" },{ index: "2-3", name: "已收藏租赁住房" }]
         },
 
-      ]
+      ],
     };
   },
   methods: {
-
+    open() {
+      var r=false;
+      //客服问题
+      var problem="";
+      while(!r){
+        problem =prompt("请输入你的问题(客服留言)",problem);
+        //alert(problem);
+        if(problem==null) {
+          break;
+        }
+        else if(problem!=""){
+          var r=confirm("请确认你的问题："+problem);
+        }
+        else{
+          alert("请输入内容");
+        }
+      }
+    }
   },
   mounted(){
     document.getElementsByClassName("el-menu-item is-active")[0].click()
@@ -56,4 +86,14 @@ export default {
 </script>
 
 <style scoped>
+.head_portrait{
+  position: absolute;
+  right: 20px;
+  top: 10px;
+}
+.server{
+  position: absolute;
+  right: 80px;
+  top: 10px;
+}
 </style>
