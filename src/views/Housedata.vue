@@ -2,7 +2,7 @@
   <div>
     <div class="block">
       <template>
-        <el-carousel :interval="4000" type="card" height="400px" indicator-position="none">
+        <el-carousel :interval="2000" type="card" height="400px" indicator-position="none">
           <el-carousel-item v-for="item in 4" :key="item">
             <h3>{{ item }}</h3>
           </el-carousel-item>

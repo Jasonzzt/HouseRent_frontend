@@ -55,8 +55,6 @@ export default {
         password: '',
         // 验证码数据
         code: '',
-        // 记住密码
-        remember: false,
         // 验证码的key，因为前后端分离，这里验证码不能由后台存入session，所以交给vue状态管理
         codeToken: ''
       },
@@ -65,7 +63,7 @@ export default {
         // 设置账户效验规则
         username: [
           {required: true, message: '请输入账户', trigger: 'blur'},
-          {min: 3, max: 10, message: '长度在 3 到 10 个字符的账户', trigger: 'blur'}
+          {min: 8, max: 30, message: '请输入正确的邮箱', trigger: 'blur'}
         ],
         // 设置密码效验规则
         password: [
@@ -88,7 +86,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // 表单验证成功
-          this.$axios.post('/', this.loginForm).then(res => {
+          this.$axios.post('http://localhost:8080/login', this.loginForm).then(res => {
             // 拿到结果
             let result = JSON.parse(res.data.data);
             let message = res.data.msg;

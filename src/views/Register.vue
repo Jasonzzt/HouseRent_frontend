@@ -16,7 +16,7 @@
       <el-col :span="7" class="register-card">
         <!--loginForm-->
         <el-form :model="registerForm" :rules="rules" ref="registerForm" label-width="21%" class="registerForm">
-          <el-form-item label="账户" prop="username" style="width: 380px">
+          <el-form-item label="邮箱" prop="username" style="width: 380px">
             <el-input v-model="registerForm.username"></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="password" style="width: 380px">
@@ -25,7 +25,10 @@
           <el-form-item label="确认密码" prop="passwordconf" style="width: 380px">
             <el-input type="password" v-model="registerForm.passwordconf"></el-input>
           </el-form-item>
-
+          <el-form-item label="验证码" prop="code" style="width: 380px">
+            <el-input v-model="registerForm.code" class="code-input" style="width: 60%;float: left"></el-input>
+            <el-button class="code" type="primary" :disabled='show' @click="open" >获取验证码</el-button>
+          </el-form-item>
           <el-form-item class="btn-ground">
             <el-button type="primary" @click="submitForm('registerForm')">立即注册</el-button>
             <el-button @click="returnLogin()">返回登陆</el-button>
@@ -44,6 +47,7 @@ export default {
   name: "Register",
   data() {
     return {
+      show:false,
       // 表单信息
       registerForm: {
         // 账户数据
@@ -51,14 +55,16 @@ export default {
         // 密码数据
         password: '',
         //密码确认数据
-        passwordconf:''
+        passwordconf:'',
+        //注册验证码
+        code:''
       },
       // 表单验证
       rules: {
         // 设置账户效验规则
         username: [
-          {required: true, message: '请输入账户', trigger: 'blur'},
-          {min: 3, max: 10, message: '长度在 3 到 10 个字符的账户', trigger: 'blur'}
+          {required: true, message: '请输入注册邮箱', trigger: 'blur'},
+          {min: 8, max: 30, message: '请输入正确的邮箱', trigger: 'blur'}
         ],
         // 设置密码效验规则
         password: [
@@ -68,23 +74,52 @@ export default {
         passwordconf: [
           {required: true, message: '请输入密码', trigger: 'blur'},
           {min: 6, max: 20, message: '长度在 6 到 20 个字符的密码', trigger: 'blur'}
-        ]
+        ],
+        code: [
+          {required: true, message: '请输入验证码', trigger: 'blur'},
+          {min: 5, max: 5, message: '请输入5位验证码', trigger: 'blur'}
+        ],
       }
     };
   },
   methods: {
+    open() {
+      let formdata=new FormData();
+      formdata.append("username",this.registerForm.username);
+      let config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+      this.$axios.post('http://localhost:8080/emailconfirm', formdata,config).then(res => {
+        // 拿到结果
+        let result = JSON.parse(res.data.data);
+        let message = res.data.msg;
+
+        // 判断结果
+        if (message==="true"&&result) {
+          this.$alert('验证码已发送至对应邮箱，请注意查收', '提醒', {
+            confirmButtonText: '确定',
+            callback: action => {
+              this.show = true;
+            }
+
+          });
+        }
+      })
+    },
     // 提交表单
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // 表单验证成功
-          this.$axios.post('/register', this.registerForm).then(res => {
+          this.$axios.post('http://localhost:8080/register', this.registerForm).then(res => {
             // 拿到结果
             let result = JSON.parse(res.data.data);
             let message = res.data.msg;
 
             // 判断结果
-            if (result) {
+            if (message=='true'&&result) {
 
               /*登陆成功*/
               Element.Message.success(message);
@@ -139,5 +174,9 @@ export default {
   border-radius: 10px;
   padding: 40px 40px 30px 15px;
   width: auto;
+}
+.code{
+  position: relative;
+  left: 10px;
 }
 </style>

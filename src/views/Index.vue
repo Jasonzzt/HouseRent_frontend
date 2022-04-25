@@ -11,7 +11,7 @@
         <el-button type="text" @click="dialogVisible = true">免责声明</el-button>
         <br>
         <span>
-        © 2022 711201,SEU
+        © 2022 SE,711201,SEU
         </span>
         <el-dialog
             title="住房租赁平台免责声明"
