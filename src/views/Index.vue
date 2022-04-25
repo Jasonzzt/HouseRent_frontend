@@ -18,9 +18,9 @@
             :visible.sync="dialogVisible"
             width="30%"
             :before-close="handleClose">
-          <span>1.平台对于数据的真实性不负责，请用户提高警惕。</span>
+          <span>1.平台对于交易无任何干涉和保障，请尽量线下交易。</span>
           <br>
-          <span>2.平台对于交易无任何干涉和保障，请尽量线下交易。</span>
+          <span>2.平台对于数据的真实性不负责，请用户提高警惕。</span>
           <br>
           <span>3.平台对于用户信息数据将做到严格保密。</span>
           <span slot="footer" class="dialog-footer">
