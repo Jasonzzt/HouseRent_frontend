@@ -97,7 +97,7 @@ export default {
         //let message = JSON.parse(res.data.msg);
 
         let message = res.data.msg;
-        alert(message);
+        //alert(message);
         // 判断结果
         if (message==="true") {
           Element.Message.success("验证码已发送至对应邮箱，请注意查收");
