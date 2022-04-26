@@ -56,7 +56,7 @@ export default {
         // 验证码数据
         code: '',
         // 验证码的key，因为前后端分离，这里验证码不能由后台存入session，所以交给vue状态管理
-        codeToken: ''
+        //codeToken: ''
       },
       // 表单验证
       rules: {
@@ -85,22 +85,33 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          let formdata=new FormData();
+          formdata.append("username",this.loginForm.username);
+          formdata.append("password",this.loginForm.password);
+          formdata.append("code",this.loginForm.code);
+          let config = {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
           // 表单验证成功
-          this.$axios.post('http://localhost:8080/login', this.loginForm).then(res => {
+          this.$axios.post('http://localhost:8080/login', formdata,config).then(res => {
             // 拿到结果
-            let result = JSON.parse(res.data.data);
+            //let result = JSON.parse(res.data.data);
             let message = res.data.msg;
-
+            let codeconfirm=res.data.success;
             // 判断结果
-            if (result) {
-
+            if (message==='true'&&codeconfirm==='true') {
               /*登陆成功*/
-              Element.Message.success(message);
+              Element.Message.success("登陆成功");
               /*跳转页面*/
               router.push('/index')
-            } else {
+            } else if(codeconfirm==='false'){
               /*打印错误信息*/
-              Element.Message.error(message);
+              Element.Message.error("验证码错误");
+            }else{
+              /*打印错误信息*/
+              Element.Message.error("账户或密码错误");
             }
           })
         } else {
@@ -109,7 +120,7 @@ export default {
         }
       });
     },
-    //转入登陆页面
+    //转入注册页面
     register(){
       router.push('/register')
     },
@@ -120,11 +131,17 @@ export default {
     // 获取验证码方法
     getVerifyCodeImg() {
       /*获取验证码*/
-      this.$axios.get('/getVerifyCode').then(res => {
+      let formdata=new FormData();
+      let config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+      this.$axios.post('http://localhost:8080/getverifycode',formdata,config).then(res => {
         // 获取验证码key
-        this.loginForm.codeToken = res.data.data.codeToken;
+        //this.loginForm.codeToken = res.data.codeToken;
         // 获取验证码图片
-        this.codeImg = res.data.data.codeImg;
+        this.codeImg = res.data.msg;
       })
     }
   },
@@ -167,7 +184,7 @@ export default {
 .title {
   text-shadow: -3px 3px 1px #5f565e;
   text-align: center;
-  margin-top: 40%;
+  margin-top: 30%;
   color: #41b9a6;
   font-size: 35px;
 }

@@ -84,6 +84,7 @@ export default {
   },
   methods: {
     open() {
+      this.show = true;
       let formdata=new FormData();
       formdata.append("username",this.registerForm.username);
       let config = {
@@ -93,18 +94,18 @@ export default {
       }
       this.$axios.post('http://localhost:8080/emailconfirm', formdata,config).then(res => {
         // 拿到结果
-        let result = JSON.parse(res.data.data);
+        //let message = JSON.parse(res.data.msg);
+
         let message = res.data.msg;
-
+        alert(message);
         // 判断结果
-        if (message==="true"&&result) {
-          this.$alert('验证码已发送至对应邮箱，请注意查收', '提醒', {
-            confirmButtonText: '确定',
-            callback: action => {
-              this.show = true;
-            }
-
-          });
+        if (message==="true") {
+          Element.Message.success("验证码已发送至对应邮箱，请注意查收");
+          this.show = true;
+        }
+        else{
+          Element.Message.error("账户已存在或邮箱错误");
+          this.show = false;
         }
       })
     },
@@ -112,22 +113,31 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          let formdata=new FormData();
+          formdata.append("username",this.registerForm.username);
+          formdata.append("password",this.registerForm.password);
+          formdata.append("code",this.registerForm.code);
+          let config = {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
           // 表单验证成功
-          this.$axios.post('http://localhost:8080/register', this.registerForm).then(res => {
+          this.$axios.post('http://localhost:8080/register', formdata,config).then(res => {
             // 拿到结果
-            let result = JSON.parse(res.data.data);
+            //let result = JSON.parse(res.data.data);
             let message = res.data.msg;
 
             // 判断结果
-            if (message=='true'&&result) {
+            if (message==='true') {
 
               /*登陆成功*/
-              Element.Message.success(message);
+              Element.Message.success("注册成功");
               /*跳转页面*/
               router.push('/index')
             } else {
               /*打印错误信息*/
-              Element.Message.error(message);
+              Element.Message.error("验证码错误");
             }
           })
         } else {
@@ -163,7 +173,7 @@ export default {
 .title {
   text-shadow: -3px 3px 1px #5f565e;
   text-align: center;
-  margin-top: 40%;
+  margin-top: 30%;
   color: #41b9a6;
   font-size: 35px;
 }
@@ -176,7 +186,6 @@ export default {
   width: auto;
 }
 .code{
-  position: relative;
-  left: 10px;
+  float: right;
 }
 </style>
