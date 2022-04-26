@@ -6,6 +6,7 @@ import Index from '../views/Index.vue'
 import Housedata from "../views/Housedata.vue"
 import UsrInfo from "@/views/UsrInfo.vue"
 import Message from "@/views/Message.vue";
+import HouseInfo from "@/views/HouseInfo";
 Vue.use(VueRouter)
 
 const routes = [
@@ -40,6 +41,11 @@ const routes = [
         path:'/message',
         name: 'Message',
         component: Message
+      },
+      {
+        path:'/houseinfo',
+        name:'Houseinfo',
+        component: HouseInfo
       }
     ]
   },
