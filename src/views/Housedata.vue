@@ -64,7 +64,7 @@
       <el-container>
         <el-aside  width="520px" ><img :src="house.img" style="margin-top: 20px;border-radius: 8px; width:450px;height:260px"></el-aside>
         <el-main >
-          <h1 class="title" style="font-size: 30px">{{house.title}}</h1>
+          <h1 class="titles" style="font-size: 30px">{{house.title}}</h1>
           <p class="otherthing" style="font-size: 20px">{{house.otherthing}}</p>
         </el-main>
       </el-container>
@@ -257,7 +257,7 @@ export default {
   line-height: 160px;
 
 }
-.title{
+.titles{
   position: absolute;
   margin-top: 10px;
   margin-left: 30px;

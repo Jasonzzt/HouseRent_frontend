@@ -5,7 +5,7 @@
     <img style="width: 100%;height: 100%" src="https://pic4.ajkimg.com/display/xinfang/0bfa693ea00ccc2a9af9d607359ec58f/245x160m.jpg">
   </div>
   <div class="right">
-    <h1 class="title">明星小区</h1>
+    <h1 class="houseTitle">明星小区</h1>
     <span style="font-size:30px">6000元/平方米</span>
     <span style="margin-left: 50px">三室一厅</span>
     <span style="margin-left: 50px">合租</span>
@@ -62,7 +62,7 @@ export default {
   float:left;
 }
 
-.title{
+.houseTitle{
   position: absolute;
   margin-top: -100px;
   margin-left: 60px;
