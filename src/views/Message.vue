@@ -2,7 +2,7 @@
   <el-container>
     <el-aside width="400px"><Myaside></Myaside></el-aside>
     <el-container>
-      <el-header>用户名</el-header>
+      <el-header><Myheader></Myheader></el-header>
       <el-main><Mymain></Mymain></el-main>
       <el-footer><Myfooter></Myfooter></el-footer>
     </el-container>
@@ -13,14 +13,24 @@
 import Myaside from "@/components/Myaside";
 import Myfooter from "@/components/Myfooter";
 import Mymain from "@/components/Mymain";
-
+import Myheader from "@/components/Myheader";
 export default {
   components:{
     Myaside,
     Myfooter,
-    Mymain
+    Mymain,
+    Myheader
   },
   name: "Message",
+  data(){
+    return{
+      //myInfo:
+    }
+  },
+/*  computed: {
+    ...mapState(["myInfo"])
+  }*/
+
 }
 </script>
 

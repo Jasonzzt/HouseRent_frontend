@@ -104,6 +104,10 @@ export default {
             if (message==='true'&&codeconfirm==='true') {
               /*登陆成功*/
               Element.Message.success("登陆成功");
+
+              /*获取用户信息*/
+              //this.$store.state.myInfo
+
               /*跳转页面*/
               router.push('/index')
             } else if(codeconfirm==='false'){

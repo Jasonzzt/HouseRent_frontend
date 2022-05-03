@@ -24,7 +24,7 @@
         <div class="head_portrait">
           <a href="#/usrInfo" class="user">
             <span class="user_icon">
-              <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+              <el-avatar :src="myInfo.img"></el-avatar>
             </span>
           </a>
         </div>
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-
+import store from "../store/index";
 export default {
   name: "NaviMenu",
 
@@ -60,9 +60,9 @@ export default {
   },
   methods: {
     open() {
-      var r=false;
+      let r=false;
       //客服问题
-      var problem="";
+      let problem="";
       while(!r){
         problem =prompt("请输入你的问题(客服留言)",problem);
         //alert(problem);
@@ -70,7 +70,7 @@ export default {
           break;
         }
         else if(problem!=""){
-          var r=confirm("请确认你的问题："+problem);
+          let r=confirm("请确认你的问题："+problem);
         }
         else{
           alert("请输入内容");
@@ -80,6 +80,11 @@ export default {
   },
   mounted(){
     document.getElementsByClassName("el-menu-item is-active")[0].click()
+  },
+  computed:{
+    myInfo(){
+      return store.state.myInfo;
+    }
   }
 };
 

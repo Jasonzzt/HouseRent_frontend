@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import store from './store'
+import store from './store/index'
 /*导入ElementUI*/
 import elementUI from 'element-ui';
 /*导入ElementUI的CSS样式*/
@@ -20,10 +20,19 @@ Vue.prototype.$qs = qs;
 require('./mock/LoginService.js')
 require('./mock/RegisterService.js')
 
+//import Store from './store/index';
+import Vuex from 'vuex'
+Vue.use(Vuex)
 Vue.config.productionTip = false
 
 new Vue({
   router,
   store,
+  //Store,
+  computed:{
+    userInfo(){
+      return store.state.userInfo;
+    }
+  },
   render: h => h(App)
 }).$mount('#app')
