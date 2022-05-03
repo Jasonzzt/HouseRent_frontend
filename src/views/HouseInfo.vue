@@ -1,13 +1,19 @@
 <template>
- <div>
-   <body onload="opener.location.reload()">
-   <h1 id="title">信息组合</h1>
-    <div>
-     <img class="showImg" src=https://pic4.ajkimg.com/display/xinfang/7d41f5ace3acbe226234aa1f81aa1155/403x335n.jpg>
-    </div>
-      <div>详细介绍</div>
-   </body>
- </div>
+<body>
+<div class="box">
+  <div class="left">
+    <img style="width: 100%;height: 100%" src="https://pic4.ajkimg.com/display/xinfang/0bfa693ea00ccc2a9af9d607359ec58f/245x160m.jpg">
+  </div>
+  <div class="right">
+    <h1 class="title">明星小区</h1>
+    <span style="font-size:30px">6000元/平方米</span>
+    <span style="margin-left: 50px">三室一厅</span>
+    <span style="margin-left: 50px">合租</span>
+    <el-button class="button" >联系卖家</el-button>
+  </div>
+</div>
+</body>
+
 
 </template>
 
@@ -39,10 +45,32 @@ export default {
 
 
 
-
-
 </script>
 
 <style scoped>
+.box .left{
+  width:40%;
+  height:500px;
+  background-color:#507D57;
+  float:left;
+}
 
+.box .right{
+  width:60%;
+  height:500px;
+  background-color:#95B17F;
+  float:left;
+}
+
+.title{
+  position: absolute;
+  margin-top: -100px;
+  margin-left: 60px;
+}
+
+.button{
+  position:absolute;
+  margin-top: 450px;
+  margin-left:5%;
+}
 </style>
