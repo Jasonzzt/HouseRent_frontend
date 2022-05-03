@@ -147,6 +147,18 @@ export default {
       //抽屉效果
       drawer: false,
       direction: 'ttb',
+      housedata:[
+        {
+          title:"小区一",
+          img:"https://pic4.ajkimg.com/display/xinfang/b57d6d4baf27754c01996e42cda8fece/403x335n.jpg",
+          otherthing:"很不戳"
+        },
+        {
+          title:"小区二",
+          img:"https://pic4.ajkimg.com/display/xinfang/778cedb340da07b23d26cbf381201ccc/403x335n.jpg",
+          otherthing:"挺好"
+        }
+      ]
 
     };
   },
@@ -228,5 +240,35 @@ export default {
   /*width: 60%;*/
   display: inline-block;
   float: left;
+}
+
+.el-aside {
+  background-color: #D3DCE6;
+  color: #333;
+  text-align: center;
+  line-height: 60px;
+
+}
+
+.el-main {
+  background-color: #D3DCE6;
+  color: #333;
+  text-align: center;
+  line-height: 160px;
+
+}
+.title{
+  position: absolute;
+  margin-top: 10px;
+  margin-left: 30px;
+
+}
+.otherthing{
+  position: absolute;
+  margin-top: 50px;
+  margin-left: 30px;
+}
+.housedata{
+  border: #eceeee solid 2px;
 }
 </style>
