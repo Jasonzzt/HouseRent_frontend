@@ -79,7 +79,7 @@ export default {
     }
   },
   mounted(){
-    document.getElementsByClassName("el-menu-item is-active")[0].click()
+    document.getElementsByClassName("el-menu-item is-active")[0].click();
   },
   computed:{
     myInfo(){

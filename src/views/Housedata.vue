@@ -60,14 +60,14 @@
         </el-select>
      </div>
     </el-drawer>
-
-    <!--    展示列表-->
-    <div class="showWindow" v-for="count in 4">
-      <!--      暂用这个图-->
-        <div><img class="showImg" src=https://pic4.ajkimg.com/display/xinfang/7d41f5ace3acbe226234aa1f81aa1155/403x335n.jpg></div>
-       <div class="showTitle"><h1>信息</h1></div>
-        <div class="showTag">一些标签、信息、介绍、这些应该从后端获取</div>
-      <div><el-button style="float: right" @click="moreInfo" type="primary" >详情界面</el-button></div>
+    <div class="housedata" v-for="house in housedata" :key="index" style="cursor: pointer" @click="moreInfo">
+      <el-container>
+        <el-aside  width="520px" ><img :src="house.img" style="margin-top: 20px;border-radius: 8px; width:450px;height:260px"></el-aside>
+        <el-main >
+          <h1 class="title" style="font-size: 30px">{{house.title}}</h1>
+          <p class="otherthing" style="font-size: 20px">{{house.otherthing}}</p>
+        </el-main>
+      </el-container>
     </div>
 
   </div>
@@ -147,6 +147,18 @@ export default {
       //抽屉效果
       drawer: false,
       direction: 'ttb',
+      housedata:[
+        {
+          title:"小区一",
+          img:"https://pic4.ajkimg.com/display/xinfang/b57d6d4baf27754c01996e42cda8fece/403x335n.jpg",
+          otherthing:"很不戳"
+        },
+        {
+          title:"小区二",
+          img:"https://pic4.ajkimg.com/display/xinfang/778cedb340da07b23d26cbf381201ccc/403x335n.jpg",
+          otherthing:"挺好"
+        }
+      ]
 
     };
   },
@@ -157,8 +169,7 @@ export default {
       this.$nextTick(()=> {
         this.isReloadData = true
       })
-      }
-    },
+      },
     //跳转详情界面
     moreInfo(){
 
@@ -171,9 +182,11 @@ export default {
         this.$router.push('/houseinfo')
       });
     },
-  changeValue(v1,v2,v3){
+    changeValue(v1,v2,v3){
 
-  }
+    }
+    },
+
 }
 
 
@@ -227,5 +240,35 @@ export default {
   /*width: 60%;*/
   display: inline-block;
   float: left;
+}
+
+.el-aside {
+  background-color: #D3DCE6;
+  color: #333;
+  text-align: center;
+  line-height: 60px;
+
+}
+
+.el-main {
+  background-color: #D3DCE6;
+  color: #333;
+  text-align: center;
+  line-height: 160px;
+
+}
+.title{
+  position: absolute;
+  margin-top: 10px;
+  margin-left: 30px;
+
+}
+.otherthing{
+  position: absolute;
+  margin-top: 50px;
+  margin-left: 30px;
+}
+.housedata{
+  border: #eceeee solid 2px;
 }
 </style>
