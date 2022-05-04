@@ -44,7 +44,8 @@ export default {
     return {
       dialogVisible: false
     };
-  }
+  },
+
 };
 </script>
 

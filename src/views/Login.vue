@@ -43,6 +43,7 @@
 <script>
 import Element from 'element-ui';
 import router from "@/router";
+import store from "@/store";
 export default {
   name: "Login",
   data() {
@@ -106,7 +107,7 @@ export default {
               Element.Message.success("登陆成功");
 
               /*获取用户信息*/
-              //this.$store.state.myInfo
+              this.getData();
 
               /*跳转页面*/
               router.push('/index')
@@ -146,6 +147,29 @@ export default {
         //this.loginForm.codeToken = res.data.codeToken;
         // 获取验证码图片
         this.codeImg = res.data.msg;
+      })
+    },
+    getData(){
+      let formdata=new FormData();
+      formdata.append("username",this.loginForm.username);
+      let config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+      this.$axios.post('http://localhost:8080/getuser', formdata,config).then(res =>{
+        //alert("发回来了");
+
+        let msg=res.data.msg;
+        //alert(msg);
+        let username=msg.username;
+        let img=msg.img;
+        let name=msg.name;
+        let userlist=msg.userlist;
+        let chatmessagelist=msg.chatmessagelist;
+        //alert(userlist[0].username);
+        store.commit("setData", {userName:username,img:img,name:name,userList:userlist,chatMessageList:chatmessagelist});
+        store.commit("setWS",{});
       })
     }
   },

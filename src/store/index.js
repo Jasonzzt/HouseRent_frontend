@@ -7,6 +7,8 @@ export default new Vuex.Store({
   state: {
     /* 记录登录状态 */
     isLogin:false,
+    /*WebSocket*/
+    ws:'',
     /* 我的信息 */
     myInfo:{
       img:'https://img0.baidu.com/it/u=3286620577,661592788&fm=253&fmt=auto&app=138&f=JPEG?w=200&h=200',
@@ -25,7 +27,7 @@ export default new Vuex.Store({
     /* 用户列表 */
     userList: [{
       name: '王小虎',
-      username:'',
+      username:'123',
       img: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
     }, {
       name: '郑泷',
@@ -61,7 +63,7 @@ export default new Vuex.Store({
     /* 聊天记录 */
     chatMessageList: [
       {
-        username: "王小虎",
+        username: "123",
         list: [
           {
             type: "my",
@@ -100,20 +102,54 @@ export default new Vuex.Store({
       //alert(state.userInfo.name)
     },
     addMessage(state,data){
-      for(let i=0;i<state.chatMessageList.length;i++){
-        if(state.chatMessageList[i].username==state.userInfo.name){
+      let i;
+      for(i=0;i<state.chatMessageList.length;i++){
+        if(state.chatMessageList[i].username==state.userInfo.username){
           //alert("?");
           state.chatMessageList[i].list.push(data);
           //alert("ok");
           break;
         }
       }
+      if(i==state.chatMessageList.length){
+        state.chatMessageList.push({username: state.userInfo.username,list:[]});
+        state.chatMessageList[i].list.push(data);
+      }
     },
     setHouseInfo(state,data){
       state.houseInfo=data;
       //alert(state.houseInfo.houseId);
-    }
+    },
+    setData(state,data){
+      state.myInfo.username=data.userName;
+      state.myInfo.name=data.name;
+      state.myInfo.img=data.img;
+      state.userList=data.userList;
+      state.chatMessageList=data.chatMessageList;
+      state.isLogin=true;
+    },
+    setWS(state,data){
+      state.ws=new WebSocket("ws://localhost:8080/ws");
+      if(state.ws.readyState==state.ws.CONNECTING)console.log("ws 连接成功");
+      ws.onopen = function(){
+        state.ws.send(JSON.stringify({"username":state.myInfo.username}));
+      }
 
+      state.ws.onmessage=function (evt) {
+        let formdata=new FormData();
+        formdata.append("username",state.myInfo.username);
+        let config = {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+        this.$axios.post('http://localhost:8080/getuser', formdata,config).then(res =>{
+
+          state.userlist=res.data.msg.userlist;
+          state.chatmessagelist=res.data.msg.chatmessagelist;
+        })
+      }
+    }
   },
   actions: {},
   modules: {},

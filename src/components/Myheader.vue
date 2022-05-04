@@ -15,8 +15,12 @@ export default {
   computed: {
     userInfo() {
         return store.state.userInfo;
-      }
-  }
+      },
+    ws(){
+      return store.state.ws;
+    }
+  },
+
 }
 </script>
 

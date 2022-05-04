@@ -40,7 +40,7 @@ export default {
     setUserInfo(row, column, event){
       //alert(row.name);
       //console.log(row);
-      store.commit('setUserInfo',{name:row.name,img:row.img});
+      store.commit('setUserInfo',{username:row.username,name:row.name,img:row.img});
     }
   },
 

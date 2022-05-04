@@ -14,6 +14,7 @@ import Myaside from "@/components/Myaside";
 import Myfooter from "@/components/Myfooter";
 import Mymain from "@/components/Mymain";
 import Myheader from "@/components/Myheader";
+import store from "../store/index";
 export default {
   components:{
     Myaside,
@@ -27,9 +28,36 @@ export default {
       //myInfo:
     }
   },
-/*  computed: {
-    ...mapState(["myInfo"])
-  }*/
+  methods:{
+    getData(){
+      let formdata=new FormData();
+      formdata.append("username",this.$store.state.myInfo.username);
+      let config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+      this.$axios.post('http://localhost:8080/getuser', formdata,config).then(res =>{
+        //alert("发回来了");
+
+        let msg=res.data.msg;
+        //alert(msg);
+        let username=msg.username;
+        let img=msg.img;
+        let name=msg.name;
+        let userlist=msg.userlist;
+        let chatmessagelist=msg.chatmessagelist;
+        //alert(userlist[0].username);
+        store.commit("setData", {userName:username,img:img,name:name,userList:userlist,chatMessageList:chatmessagelist});
+        store.commit("setWS",{});
+      })
+    }
+  },
+  mounted() {
+  }
+  /*  computed: {
+      ...mapState(["myInfo"])
+    }*/
 
 }
 </script>

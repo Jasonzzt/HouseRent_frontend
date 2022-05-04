@@ -3,7 +3,7 @@
     <!-- 先循环找到你想要聊天的那个人 -->
     <div v-for="(list, index) in msgList" :key="index">
       <!-- 有聊天记录：循环聊天记录 -->
-      <div v-if="list.username==userInfo.name">
+      <div v-if="list.username==userInfo.username">
         <!-- 再循环显示聊天记录 -->
         <div  v-for="(msg, index) in list.list" :key="index">
           <p :class="{'left':msg.type=='user'}" v-if="msg.type=='user'">

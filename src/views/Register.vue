@@ -43,6 +43,7 @@
 <script>
 import Element from 'element-ui';
 import router from "@/router";
+import store from "../store/index";
 export default {
   name: "Register",
   data() {
@@ -133,6 +134,8 @@ export default {
 
               /*登陆成功*/
               Element.Message.success("注册成功");
+              /*获取数据*/
+              this.getData();
               /*跳转页面*/
               router.push('/index')
             } else {
@@ -152,6 +155,28 @@ export default {
     },
     returnLogin(){
       router.push('/');
+    },
+    getData(){
+      let formdata=new FormData();
+      formdata.append("username",this.registerForm.username);
+      let config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+      this.$axios.post('http://localhost:8080/getuser', formdata,config).then(res =>{
+
+        let msg=res.data.msg;
+        //alert(msg);
+        let username=msg.username;
+        let img=msg.img;
+        let name=msg.name;
+        let userlist=msg.userlist;
+        let chatmessagelist=msg.chatmessagelist;
+        //alert(userlist[0].username);
+        store.commit("setData", {userName:username,img:img,name:name,userList:userlist,chatMessageList:chatmessagelist});
+        store.commit("setWS",{});
+      })
     }
   }
 }

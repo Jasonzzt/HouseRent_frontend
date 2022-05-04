@@ -9,14 +9,19 @@ export default {
   data() {
     return {
       input:'',
-
+      myName:'',
+      userName:'',
     }
   },
   methods: {
     send(){
+
       /* 发送消息 */
-      //alert(this.input);
-      store.commit('addMessage', {type:"my",time:"",msg:this.input});
+      store.commit('addMessage', {type:"my",msg:this.input});
+      let a={"my":store.state.myInfo.username,"user":store.state.userInfo.username,"msg":this.input}
+      //alert(a)
+      //alert(JSON.stringify(a))
+      store.state.ws.send(JSON.stringify(a));
       /* 清空输入框 */
       this.input='';
     },
@@ -27,6 +32,12 @@ export default {
     },
     chatMessageList(){
       return store.state.chatMessageList;
+    },
+    ws(){
+      return store.state.ws;
+    },
+    myInfo(){
+      return store.state.myInfo;
     }
   }
 }
