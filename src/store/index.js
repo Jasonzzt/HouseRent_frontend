@@ -11,15 +11,21 @@ export default new Vuex.Store({
     myInfo:{
       img:'https://img0.baidu.com/it/u=3286620577,661592788&fm=253&fmt=auto&app=138&f=JPEG?w=200&h=200',
       name:'',
+      username:''
     },
     /* 别人的信息（特指聊天对象） */
     userInfo:{
       img:'',
       name:'',
+      username:''
+    },
+    houseInfo:{
+      houseId:''
     },
     /* 用户列表 */
     userList: [{
       name: '王小虎',
+      username:'',
       img: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
     }, {
       name: '郑泷',
@@ -59,17 +65,14 @@ export default new Vuex.Store({
         list: [
           {
             type: "my",
-            time: "",
             msg: "你好啊",
           },
           {
             type: "user",
-            time: "",
             msg: "你好啊",
           },
           {
             type: "user",
-            time: "",
             msg: "你要租房吗？",
           },
         ],
@@ -79,12 +82,12 @@ export default new Vuex.Store({
         list: [
           {
             type: "my",
-            time: "",
+
             msg: "你好啊",
           },
           {
             type: "user",
-            time: "",
+
             msg: "你好啊",
           },
             ]
@@ -105,6 +108,10 @@ export default new Vuex.Store({
           break;
         }
       }
+    },
+    setHouseInfo(state,data){
+      state.houseInfo=data;
+      //alert(state.houseInfo.houseId);
     }
 
   },

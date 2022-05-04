@@ -60,7 +60,19 @@
         </el-select>
      </div>
     </el-drawer>
-    <div class="housedata" v-for="house in housedata" :key="index" style="cursor: pointer" @click="moreInfo">
+    <el-table :data="housedata" stripe style="width: 100%; cursor: pointer;border-radius: 25px; " :show-header='false' >
+      <el-table-column  label="房子" >
+        <template slot-scope="scope" >
+          <div @click="moreInfo(scope.row)" >
+            <img :src="scope.row.img" style="margin-top: 8px;border-radius: 8px;width:450px;height:260px"></img>
+            <span class="span" style="text-align: center; position:absolute; margin-top: 20px;margin-left: 30px;font-size: 30px"  >{{ scope.row.title }}</span>
+            <span class="span" style="text-align: center; position:absolute; margin-top: 60px;margin-left: 30px;font-size: 20px "  >{{ scope.row.otherthing }}</span>
+          </div>
+        </template>
+      </el-table-column>
+    </el-table>
+<!--    <template slot-scope="scope" >
+    <div class="housedata" v-for="house in housedata" :key="index" style="cursor: pointer" @click="moreInfo(scope.row)">
       <el-container>
         <el-aside  width="520px" ><img :src="house.img" style="margin-top: 20px;border-radius: 8px; width:450px;height:260px"></el-aside>
         <el-main >
@@ -69,14 +81,14 @@
         </el-main>
       </el-container>
     </div>
-
+    </template>-->
   </div>
 </template>
 
 
 <script>
 import router from "@/router";
-
+import store from "../store/index";
 export default {
   name: "Housedata",
 
@@ -171,15 +183,28 @@ export default {
       })
       },
     //跳转详情界面
-    moreInfo(){
-
-      router.push('/houseinfo')
+    moreInfo(row){
+      //alert(row.title);
+      store.commit("setHouseInfo",{houseId:row.title});
+      router.push('/houseinfo');
     },
     //搜索框，向后端传入输入的小区名，根据小区名显示房源列表
     research(){
-      this.$axios.post("http://localhost:8080/getverifycode",this.$refs.neighborhood).then(res=>{
-
-        this.$router.push('/houseinfo')
+      //alert(this.input);
+      let formdata=new FormData();
+      formdata.append("neighborhood",this.input);
+      formdata.append("location",this.value1);
+      formdata.append("type",this.value2);
+      formdata.append("cost",this.value3);
+      let config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+      this.$axios.post("http://localhost:8080/getverifycode",formdata,config).then(res=>{
+        //返回对应房源信息
+        //reload
+        this.reloadPart();
       });
     },
     changeValue(v1,v2,v3){
