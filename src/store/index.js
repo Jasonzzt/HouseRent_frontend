@@ -144,9 +144,9 @@ export default new Vuex.Store({
           }
         }
         this.$axios.post('http://localhost:8080/getuser', formdata,config).then(res =>{
-
-          state.userlist=res.data.msg.userlist;
-          state.chatmessagelist=res.data.msg.chatmessagelist;
+          let msg=res.data.msg;
+          state.userlist=msg.userlist;
+          state.chatmessagelist=msg.chatmessagelist;
         })
       }
     }
