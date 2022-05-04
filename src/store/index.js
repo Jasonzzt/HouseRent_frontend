@@ -131,7 +131,7 @@ export default new Vuex.Store({
     setWS(state,data){
       state.ws=new WebSocket("ws://localhost:8080/ws");
       if(state.ws.readyState==state.ws.CONNECTING)console.log("ws 连接成功");
-      ws.onopen = function(){
+      state.ws.onopen = function(){
         state.ws.send(JSON.stringify({"username":state.myInfo.username}));
       }
 
