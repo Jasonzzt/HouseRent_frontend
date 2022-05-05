@@ -177,6 +177,10 @@ export default {
         store.commit("setData", {userName:username,img:img,name:name,userList:userlist,chatMessageList:chatmessagelist});
         store.commit("setWS",{});
       })
+      this.$axios.post('http://localhost:8080/gethouse', formdata,config).then(res =>{
+        let msg=res.data.msg;
+        store.commit("setHouseData",{houseList:msg});
+      })
     }
   }
 }

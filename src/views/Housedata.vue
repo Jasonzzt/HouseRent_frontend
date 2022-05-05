@@ -69,23 +69,18 @@
         <template slot-scope="scope" >
           <div @click="moreInfo(scope.row)" >
             <img :src="scope.row.img" style="margin-top: 8px;border-radius: 8px;width:450px;height:260px"></img>
-            <span class="span" style="text-align: center; position:absolute; margin-top: 20px;margin-left: 30px;font-size: 30px"  >{{ scope.row.title }}</span>
-            <span class="span" style="text-align: center; position:absolute; margin-top: 60px;margin-left: 30px;font-size: 20px "  >{{ scope.row.information }}</span>
+            <span class="span" style="text-align: center; position:absolute; margin-top: 35px;margin-left: 50px;font-size: 30px;font-family: SimSun;font-weight: bold"  >{{scope.row.district+"   "+scope.row.neighborhood+"   "+scope.row.type}}</span>
+            <span class="span1" style="text-align: center; position:absolute; margin-top: 120px;margin-left: 120px;font-size: 20px "  >{{scope.row.type}}</span>
+            <span v-if="scope.row.joint=='true'" class="span1" style="text-align: center; position:absolute; margin-top: 120px;margin-left: 350px;font-size: 20px " >合租</span>
+            <span v-if="scope.row.joint=='false'" class="span1" style="text-align: center; position:absolute; margin-top: 120px;margin-left: 350px;font-size: 20px " >独租</span>
+            <span class="span1" style="text-align: center; position:absolute; margin-top: 200px;margin-left: 120px;font-size: 20px "  >{{scope.row.district}}</span>
+            <span class="span1" style="text-align: center; position:absolute; margin-top: 200px;margin-left: 350px;font-size: 20px "  >{{scope.row.neighborhood}}</span>
+            <span class="span1" style="text-align: center; position:absolute; margin-top: 150px;margin-left: 600px;font-size: 45px;color: #e5121f;font-weight: bold;"  >{{scope.row.cost}}</span>
+            <span class="span1" style="text-align: center; position:absolute; margin-top: 154px;margin-left: 711px;font-size: 25px;color: #e5121f;font-weight: bold; "  >元/月</span>
           </div>
         </template>
       </el-table-column>
     </el-table>
-<!--    <template slot-scope="scope" >
-    <div class="housedata" v-for="house in housedata" :key="index" style="cursor: pointer" @click="moreInfo(scope.row)">
-      <el-container>
-        <el-aside  width="520px" ><img :src="house.img" style="margin-top: 20px;border-radius: 8px; width:450px;height:260px"></el-aside>
-        <el-main >
-          <h1 class="titles" style="font-size: 30px">{{house.title}}</h1>
-          <p class="otherthing" style="font-size: 20px">{{house.otherthing}}</p>
-        </el-main>
-      </el-container>
-    </div>
-    </template>-->
   </div>
 </template>
 
@@ -99,7 +94,7 @@ export default {
   data() {
     return {
       //局部刷新标识
-      isReloadData:true,
+      isReloadData: true,
       //搜索栏输入器
       input: '',
       //抽屉内三个的选择器
@@ -153,7 +148,7 @@ export default {
         value3: 'c5',
         label: '4500-6000元'
       }, {
-        value3:'c6',
+        value3: 'c6',
         label: '6000元以上'
       }],
       value1: '',
@@ -164,52 +159,40 @@ export default {
       drawer: false,
 
       direction: 'ttb',
-      housedata:[
-        {
-          title:"小区一",
-          img:"https://pic4.ajkimg.com/display/xinfang/b57d6d4baf27754c01996e42cda8fece/403x335n.jpg",
-          information:"很不戳"
-        },
 
-        {
-          title:"小区二",
-          img:"https://pic4.ajkimg.com/display/xinfang/778cedb340da07b23d26cbf381201ccc/403x335n.jpg",
-          information:"挺好"
-        }
-      ]
 
     };
   },
   methods: {
     //刷新当前界面
-    reloadPart(){
-      this.isReloadData=false;
-      this.$nextTick(()=> {
+    reloadPart() {
+      this.isReloadData = false;
+      this.$nextTick(() => {
         this.isReloadData = true
         alert("刷新")
         //housedata.push("title:")
       })
-      },
+    },
     //跳转详情界面
-    moreInfo(row){
+    moreInfo(row) {
       //alert(row.title);
-      store.commit("setHouseInfo",{houseId:row.title});
+      store.commit("setHouseInfo", {id: row.id});
       router.push('/houseinfo');
     },
     //搜索框，向后端传入输入的小区名，根据小区名显示房源列表
-    research(){
+    research() {
       //alert(this.input);
-      let formdata=new FormData();
-      formdata.append("neighborhood",this.input);
-      formdata.append("location",this.value1);
-      formdata.append("type",this.value2);
-      formdata.append("cost",this.value3);
+      let formdata = new FormData();
+      formdata.append("neighborhood", this.input);
+      formdata.append("location", this.value1);
+      formdata.append("type", this.value2);
+      formdata.append("cost", this.value3);
       let config = {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       }
-      this.$axios.post("http://localhost:8080/getverifycode",formdata,config).then(res=>{
+      this.$axios.post("http://localhost:8080/getverifycode", formdata, config).then(res => {
         //返回对应房源信息
         //reload
 
@@ -221,32 +204,38 @@ export default {
           .then(_ => {
             //测试一下函数有没有进行
             this.reloadPart();
-            let formdata=new FormData();
-            formdata.append("location",this.value1);
-            formdata.append("type",this.value2);
-            formdata.append("cost",this.value3);
+            let formdata = new FormData();
+            formdata.append("location", this.value1);
+            formdata.append("type", this.value2);
+            formdata.append("cost", this.value3);
             let config = {
               headers: {
                 'Content-Type': 'multipart/form-data'
               }
             }
-            this.$axios.post("http://localhost:8080/getverifycode",formdata,config).then(res=>{
+            this.$axios.post("http://localhost:8080/getverifycode", formdata, config).then(res => {
               //返回对应房源信息
-              let title=res.data.housedata.neighborhood+res.data.housedata.district;
-              let img =res.data.housedata.img;
-              let info=res.data.housedata.information;
+              let title = res.data.housedata.neighborhood + res.data.housedata.district;
+              let img = res.data.housedata.img;
+              let info = res.data.housedata.information;
 
-              this.reloadPart(title,img,info);
+              this.reloadPart(title, img, info);
             });
 
             done();
           })
-          .catch(_ => {});
+          .catch(_ => {
+          });
     },
-    changeValue(v1,v2,v3){
+    changeValue(v1, v2, v3) {
 
     }
-    },
+  },
+  computed:{
+    housedata() {
+      return store.state.houseList;
+    }
+  }
 
 }
 

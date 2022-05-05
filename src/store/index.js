@@ -22,7 +22,7 @@ export default new Vuex.Store({
       username: ''
     },
     houseInfo: {
-      houseId: ''
+      id:''
     },
     /* 用户列表 */
     userList: [{
@@ -76,20 +76,30 @@ export default new Vuex.Store({
     ],
     houseList:[
       {
-        houseId:'00001',
-        img:'',
-        neighborhood: '小区1',
-        district:'地区1',
-        type:'',
-        area:'',
-        cost:'',
-        layer:'',
-        joint:'',
-        information:'',
+        id:'001',
+        img:['https://pic4.ajkimg.com/display/xinfang/b57d6d4baf27754c01996e42cda8fece/403x335n.jpg'],
+        neighborhood: '幸福小区',
+        district:'江宁区',
+        type:'两室',
+        area:'100',
+        cost:'2000',
+        layer:'2楼',
+        joint:'true',
+        information:'不错',
         host:''
       },
       {
-
+        id:'002',
+        img:['https://pic4.ajkimg.com/display/xinfang/b57d6d4baf27754c01996e42cda8fece/403x335n.jpg'],
+        neighborhood: '华都福林',
+        district:'建邺区',
+        type:'三室',
+        area:'150',
+        cost:'3000',
+        layer:'13楼',
+        joint:'false',
+        information:'还行',
+        host:''
       }
     ]
 
@@ -115,8 +125,8 @@ export default new Vuex.Store({
       }
     },
     setHouseInfo(state, data) {
-      state.houseInfo = data;
-      //alert(state.houseInfo.houseId);
+      state.houseInfo.id = data.id;
+      //alert(state.houseInfo.id);
     },
     setData(state, data) {
       state.myInfo.username = data.userName;
@@ -126,6 +136,9 @@ export default new Vuex.Store({
       state.chatMessageList = data.chatMessageList;
       state.isLogin = true;
       state.athis=data.that
+    },
+    sethousedata(state,data){
+      state.houseList=data.houseList;
     },
     setWS(state, data,that) {
 
