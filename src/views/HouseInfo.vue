@@ -1,17 +1,5 @@
 <template>
 <body>
-<!--<div class="box">
-  <div class="left">
-    <img style="width: 100%;height: 100%" src="https://pic4.ajkimg.com/display/xinfang/0bfa693ea00ccc2a9af9d607359ec58f/245x160m.jpg">
-  </div>
-  <div class="right">
-    <h1 class="houseTitle">明星小区</h1>
-    <span style="font-size:30px">6000元/平方米</span>
-    <span style="margin-left: 50px">三室一厅</span>
-    <span style="margin-left: 50px">合租</span>
-    <el-button class="button" >联系卖家</el-button>
-  </div>
-</div>-->
 
       <div v-for="(list,index) in housedata" :key="index">
         <div v-if="list.id==houseInfo.id">
