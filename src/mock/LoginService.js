@@ -42,7 +42,6 @@ Mock.mock('/', 'post', (req) => {
                 result.msg = '登陆成功'
                 result.data = 'true'
                 result.pass=password
-
             } else {
                 result.msg = '密码错误'
                 result.data = 'false'

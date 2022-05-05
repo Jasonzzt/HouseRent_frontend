@@ -14,19 +14,21 @@
     <el-button @click="drawer = true" type="primary" style="margin-left: 16px;">
       信息选择
     </el-button>
-    <el-button @click="moreInfo()" type="primary" >详情界面</el-button>
+    <el-button type="primary" >发布房源</el-button>
+
     <!--抽屉效果-->
     <el-drawer
         title=""
         :visible.sync="drawer"
+        :before-close="handleClose"
         direction="ltr"
         custom-class="demo-drawer"
         ref="drawer"
     >
    <!--  三个选择器-->
-    <div >
+    <div class="selectBlock">
       <span>地区 &emsp;</span>
-      <el-select @change="changeValue(value1,value2,value3)" v-model="value1" multiple popper-append-to-body filterable placeholder="请选择">
+      <el-select @change="changeValue(value1,value2,value3)"  v-model="value1" multiple popper-append-to-body="false" filterable placeholder="请选择">
         <el-option
             v-for="item in locationOptions"
             :key="item.value1"
@@ -36,9 +38,9 @@
       </el-select>
   </div>
 
-  <div>
+  <div class="selectBlock">
       <span>户型 &emsp;</span>
-      <el-select @change="changeValue(value1,value2,value3)" v-model="value2" multiple popper-append-to-body filterable placeholder="请选择">
+      <el-select @change="changeValue(value1,value2,value3)" v-model="value2" multiple popper-append-to-body="false" filterable placeholder="请选择">
         <el-option
             v-for="item in typeOptions"
             :key="item.value2"
@@ -48,9 +50,9 @@
       </el-select>
   </div>
 
-     <div>
+     <div class="selectBlock">
         <span>租金 &emsp;</span>
-        <el-select @change="changeValue(value1,value2,value3)" v-model="value3" multiple  popper-append-to-body  filterable placeholder="请选择">
+        <el-select @change="changeValue(value1,value2,value3)" v-model="value3" multiple  popper-append-to-body="false"  filterable placeholder="请选择">
           <el-option
               v-for="item in costOptions"
               :key="item.value3"
@@ -59,14 +61,16 @@
           </el-option>
         </el-select>
      </div>
+      <el-button style="position:absolute;bottom:50px;z-index: 10" type="primary" @click="$refs.drawer.closeDrawer()" >确定</el-button>
     </el-drawer>
-    <el-table :data="housedata" stripe style="width: 100%; cursor: pointer;border-radius: 25px; " :show-header='false' >
+
+    <el-table :data="housedata" v-if="isReloadData" stripe style="width: 100%; cursor: pointer;border-radius: 25px; " :show-header='false' >
       <el-table-column  label="房子" >
         <template slot-scope="scope" >
           <div @click="moreInfo(scope.row)" >
             <img :src="scope.row.img" style="margin-top: 8px;border-radius: 8px;width:450px;height:260px"></img>
             <span class="span" style="text-align: center; position:absolute; margin-top: 20px;margin-left: 30px;font-size: 30px"  >{{ scope.row.title }}</span>
-            <span class="span" style="text-align: center; position:absolute; margin-top: 60px;margin-left: 30px;font-size: 20px "  >{{ scope.row.otherthing }}</span>
+            <span class="span" style="text-align: center; position:absolute; margin-top: 60px;margin-left: 30px;font-size: 20px "  >{{ scope.row.information }}</span>
           </div>
         </template>
       </el-table-column>
@@ -158,17 +162,19 @@ export default {
 
       //抽屉效果
       drawer: false,
+
       direction: 'ttb',
       housedata:[
         {
           title:"小区一",
           img:"https://pic4.ajkimg.com/display/xinfang/b57d6d4baf27754c01996e42cda8fece/403x335n.jpg",
-          otherthing:"很不戳"
+          information:"很不戳"
         },
+
         {
           title:"小区二",
           img:"https://pic4.ajkimg.com/display/xinfang/778cedb340da07b23d26cbf381201ccc/403x335n.jpg",
-          otherthing:"挺好"
+          information:"挺好"
         }
       ]
 
@@ -180,6 +186,8 @@ export default {
       this.isReloadData=false;
       this.$nextTick(()=> {
         this.isReloadData = true
+        alert("刷新")
+        //housedata.push("title:")
       })
       },
     //跳转详情界面
@@ -204,8 +212,36 @@ export default {
       this.$axios.post("http://localhost:8080/getverifycode",formdata,config).then(res=>{
         //返回对应房源信息
         //reload
+
         this.reloadPart();
       });
+    },
+    handleClose(done) {
+      this.$confirm('确定选择的信息吗？')
+          .then(_ => {
+            //测试一下函数有没有进行
+            this.reloadPart();
+            let formdata=new FormData();
+            formdata.append("location",this.value1);
+            formdata.append("type",this.value2);
+            formdata.append("cost",this.value3);
+            let config = {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            }
+            this.$axios.post("http://localhost:8080/getverifycode",formdata,config).then(res=>{
+              //返回对应房源信息
+              let title=res.data.housedata.neighborhood+res.data.housedata.district;
+              let img =res.data.housedata.img;
+              let info=res.data.housedata.information;
+
+              this.reloadPart(title,img,info);
+            });
+
+            done();
+          })
+          .catch(_ => {});
     },
     changeValue(v1,v2,v3){
 
@@ -224,6 +260,16 @@ export default {
   opacity: 0.75;
   line-height: 450px;
   margin: 0;
+}
+
+.el-select-dropdown {
+  top: 150px !important;
+  left: 150px !important;
+}
+
+.selectBlock{
+  height: 120px;
+
 }
 
 .el-carousel__item:nth-child(2n) {

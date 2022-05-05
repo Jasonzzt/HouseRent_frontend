@@ -95,6 +95,25 @@ export default new Vuex.Store({
             ]
       },
     ],
+    houseList:[
+      {
+        houseId:'00001',
+        img:'',
+        neighborhood: '小区1',
+        district:'地区1',
+        type:'',
+        area:'',
+        cost:'',
+        layer:'',
+        joint:'',
+        information:'',
+        host:''
+      },
+      {
+
+      }
+    ]
+
   },
   mutations: {
     setUserInfo(state,data){
