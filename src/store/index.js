@@ -128,6 +128,39 @@ export default new Vuex.Store({
       state.userInfo = data;
       //alert(state.userInfo.name)
     },
+    //侧边栏添加用户
+    addUser(state,data){
+      let i;
+      let flag=false;
+      for(i=0;i<state.userList.length;i++) {
+        if (state.userList[i].username == data.host) {//获取到的是对应房屋的信息，根据其中host来获取对应的卖家信息
+          flag = true;//判断是否已存在，若存在直接跳转到聊天界面
+          state.userInfo.img=state.userList[i].img;
+          state.userInfo.name=state.userList[i].name;
+          state.userInfo.username=state.userList[i].username;
+          break;
+        }
+      }
+      if(flag==false){//不存在时添加
+        //从后端获取对应的卖家信息，认为获得的信息是含有username,name,img的结构
+        let formdata=new FormData();
+        formdata.append("username",data.host);
+        let config = {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+        this.$axios.post('http://localhost:8080/getuser', formdata,config).then(res =>{
+          let msg=res.data.msg;
+          //将卖家信息增加到侧边栏中
+            state.userList.push({name: msg.myInfo.name, img:msg.myInfo.img,username: msg.myInfo.username})
+          //将卖家信息放入userinfo
+            state.userInfo.img=msg.myInfo.img;
+            state.userInfo.name=msg.myInfo.name;
+            state.userInfo.username=msg.myInfo.username;
+        })
+      }
+    },
     addMessage(state, data) {
       let i;
       for (i = 0; i < state.chatMessageList.length; i++) {

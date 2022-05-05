@@ -187,9 +187,9 @@ export default {
       //alert(this.input);
       let formdata=new FormData();
       formdata.append("neighborhood",this.input);
-      formdata.append("location",this.value1);
-      formdata.append("type",this.value2);
-      formdata.append("cost",this.value3);
+      // formdata.append("location",this.value1);
+      // formdata.append("type",this.value2);
+      // formdata.append("cost",this.value3);
       let config = {
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -206,11 +206,11 @@ export default {
       this.$confirm('确定选择的信息吗？')
           .then(_ => {
             //测试一下函数有没有进行
-            this.reloadPart();
-            let formdata=new FormData();
-            formdata.append("location",this.value1);
-            formdata.append("type",this.value2);
-            formdata.append("cost",this.value3);
+            // this.reloadPart();
+            // let formdata=new FormData();
+            // formdata.append("location",this.value1);
+            // formdata.append("type",this.value2);
+            // formdata.append("cost",this.value3);
             let config = {
               headers: {
                 'Content-Type': 'multipart/form-data'
@@ -218,6 +218,7 @@ export default {
             }
             this.$axios.post("http://localhost:8080/getverifycode",formdata,config).then(res=>{
               //返回对应房源信息
+
               let title=res.data.housedata.neighborhood+res.data.housedata.district;
               let img =res.data.housedata.img;
               let info=res.data.housedata.information;

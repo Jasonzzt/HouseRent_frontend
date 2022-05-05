@@ -17,6 +17,7 @@
           </div>
           <span style="position: absolute;margin-left: -600px;margin-top: -250px;font-family: SimSun;font-weight: bold;font-size: 30px;color: #41b9a6">房屋详情:{{list.information}}</span>
         </div>
+        <el-button @click="connect(list)" style="position:absolute;bottom:200px;right: 50px" type="primary" >联系房主</el-button>
       </div>
       <div>
       </div>
@@ -38,9 +39,12 @@ export default {
   },
 
   methods:{
-    connect(){
-      alert("被点了！");
+    connect(list){
+      //在全局变量userlist里面加入这个人（根据id判断是否已存在）
+      //把全局变量的userinfo改成这个人
+      store.commit("addUser",{username:list.host});
       router.push('/message');
+
     }
   },
   computed:{
