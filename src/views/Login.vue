@@ -173,6 +173,7 @@ export default {
       })
       this.$axios.post('http://localhost:8080/gethouse', formdata,config).then(res => {
         let msg = res.data.msg;
+        //alert(JSON.stringify(msg[0]));
         store.commit("setHouseData", {houseList: msg});
       })
     }

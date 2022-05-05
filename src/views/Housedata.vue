@@ -180,7 +180,7 @@ export default {
       router.push('/houseinfo');
     },
     release(){
-
+      router.push('/houserelease');
     },
     //搜索框，向后端传入输入的小区名，根据小区名显示房源列表
     research(){

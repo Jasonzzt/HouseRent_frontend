@@ -1,6 +1,5 @@
 <template>
 <body>
-
       <div v-for="(list,index) in housedata" :key="index">
         <div v-if="list.id==houseInfo.id">
           <div>
@@ -21,7 +20,7 @@
       </div>
       <div>
       </div>
-<el-button @click()="connect()" style="position:absolute;bottom:200px;right: 50px" type="primary" >联系房主</el-button>
+<el-button @click="connect()" style="position:absolute;bottom:200px;right: 50px" type="primary" >联系房主</el-button>
 </body>
 
 

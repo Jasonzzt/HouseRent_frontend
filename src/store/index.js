@@ -156,7 +156,7 @@ export default new Vuex.Store({
       state.isLogin = true;
       state.athis=data.that
     },
-    sethousedata(state,data){
+    setHouseData(state,data){
       state.houseList=data.houseList;
     },
     setWS(state, data,that) {
