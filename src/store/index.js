@@ -38,27 +38,6 @@ export default new Vuex.Store({
     }, {
       name: '张云',
       img: 'http://img.52z.com/upload/news/image/20180111/20180111085521_86389.jpg'
-    },{
-      name: '张云',
-      img: 'http://img.52z.com/upload/news/image/20180111/20180111085521_86389.jpg'
-    },{
-      name: '张云',
-      img: 'http://img.52z.com/upload/news/image/20180111/20180111085521_86389.jpg'
-    },{
-      name: '张云',
-      img: 'http://img.52z.com/upload/news/image/20180111/20180111085521_86389.jpg'
-    },{
-      name: '张云',
-      img: 'http://img.52z.com/upload/news/image/20180111/20180111085521_86389.jpg'
-    },{
-      name: '张云',
-      img: 'http://img.52z.com/upload/news/image/20180111/20180111085521_86389.jpg'
-    },{
-      name: '张云',
-      img: 'http://img.52z.com/upload/news/image/20180111/20180111085521_86389.jpg'
-    },{
-      name: '张云',
-      img: 'http://img.52z.com/upload/news/image/20180111/20180111085521_86389.jpg'
     }],
     /* 聊天记录 */
     chatMessageList: [
@@ -78,22 +57,7 @@ export default new Vuex.Store({
             msg: "你要租房吗？",
           },
         ],
-      },
-      {
-        username: "小蛮",
-        list: [
-          {
-            type: "my",
-
-            msg: "你好啊",
-          },
-          {
-            type: "user",
-
-            msg: "你好啊",
-          },
-            ]
-      },
+      }
     ],
   },
   mutations: {
