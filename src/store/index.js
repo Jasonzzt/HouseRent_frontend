@@ -101,7 +101,26 @@ export default new Vuex.Store({
         information:'还行',
         host:''
       }
-    ]
+    ],
+    /*详细的房屋信息的列表*/
+    // houseList:[
+    //   {
+    //     houseId:'00001',
+    //     img:'https://cn.bing.com/images/search?view=detailV2&ccid=w%2f%2fQ0Suq&id=03E680C18ED72818E3F6FF587C5A9E98FF57F669&thid=OIP.w__Q0SuqqEpRK8oMPGvq7QHaEi&mediaurl=https%3a%2f%2fimg.zcool.cn%2fcommunity%2f01dd505ca21e53a8012141688ba0ea.jpg%401280w_1l_2o_100sh.jpg&exph=785&expw=1280&q=%e6%88%bf%e5%ad%90&simid=608050322981347852&FORM=IRPRST&ck=C0A8B7ACAA6708782286EAF3FC3B5F5A&selectedIndex=1',
+    //     neighborhood: '秣陵街道东南大学路2号',
+    //     district:'地区1',
+    //     type:'三室一厅',
+    //     area:'200平',
+    //     cost:'9000元/月',
+    //     layer:'5',
+    //     joint:'合租',
+    //     information:'坐北朝南，花园小区，临近地铁',
+    //     host:'9990'
+    //   },
+    //   {
+    //
+    //   }
+    // ]
 
   },
   mutations: {
@@ -125,8 +144,8 @@ export default new Vuex.Store({
       }
     },
     setHouseInfo(state, data) {
-      state.houseInfo.id = data.id;
-      //alert(state.houseInfo.id);
+      state.houseInfo = data;
+      //alert(state.houseInfo.houseId);
     },
     setData(state, data) {
       state.myInfo.username = data.userName;

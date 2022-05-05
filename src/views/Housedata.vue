@@ -14,7 +14,7 @@
     <el-button @click="drawer = true" type="primary" style="margin-left: 16px;">
       信息选择
     </el-button>
-    <el-button type="primary" >发布房源</el-button>
+    <el-button type="primary" @click="release()">发布房源</el-button>
 
     <!--抽屉效果-->
     <el-drawer
@@ -81,6 +81,7 @@
         </template>
       </el-table-column>
     </el-table>
+
   </div>
 </template>
 
@@ -94,7 +95,7 @@ export default {
   data() {
     return {
       //局部刷新标识
-      isReloadData: true,
+      isReloadData:true,
       //搜索栏输入器
       input: '',
       //抽屉内三个的选择器
@@ -148,7 +149,7 @@ export default {
         value3: 'c5',
         label: '4500-6000元'
       }, {
-        value3: 'c6',
+        value3:'c6',
         label: '6000元以上'
       }],
       value1: '',
@@ -160,39 +161,41 @@ export default {
 
       direction: 'ttb',
 
-
     };
   },
   methods: {
     //刷新当前界面
-    reloadPart() {
-      this.isReloadData = false;
-      this.$nextTick(() => {
+    reloadPart(){
+      this.isReloadData=false;
+      this.$nextTick(()=> {
         this.isReloadData = true
         alert("刷新")
         //housedata.push("title:")
       })
-    },
+      },
     //跳转详情界面
-    moreInfo(row) {
+    moreInfo(row){
       //alert(row.title);
-      store.commit("setHouseInfo", {id: row.id});
+      store.commit("setHouseInfo",{id:row.id});
       router.push('/houseinfo');
     },
+    release(){
+
+    },
     //搜索框，向后端传入输入的小区名，根据小区名显示房源列表
-    research() {
+    research(){
       //alert(this.input);
-      let formdata = new FormData();
-      formdata.append("neighborhood", this.input);
-      formdata.append("location", this.value1);
-      formdata.append("type", this.value2);
-      formdata.append("cost", this.value3);
+      let formdata=new FormData();
+      formdata.append("neighborhood",this.input);
+      formdata.append("location",this.value1);
+      formdata.append("type",this.value2);
+      formdata.append("cost",this.value3);
       let config = {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       }
-      this.$axios.post("http://localhost:8080/getverifycode", formdata, config).then(res => {
+      this.$axios.post("http://localhost:8080/getverifycode",formdata,config).then(res=>{
         //返回对应房源信息
         //reload
 
@@ -204,39 +207,37 @@ export default {
           .then(_ => {
             //测试一下函数有没有进行
             this.reloadPart();
-            let formdata = new FormData();
-            formdata.append("location", this.value1);
-            formdata.append("type", this.value2);
-            formdata.append("cost", this.value3);
+            let formdata=new FormData();
+            formdata.append("location",this.value1);
+            formdata.append("type",this.value2);
+            formdata.append("cost",this.value3);
             let config = {
               headers: {
                 'Content-Type': 'multipart/form-data'
               }
             }
-            this.$axios.post("http://localhost:8080/getverifycode", formdata, config).then(res => {
+            this.$axios.post("http://localhost:8080/getverifycode",formdata,config).then(res=>{
               //返回对应房源信息
-              let title = res.data.housedata.neighborhood + res.data.housedata.district;
-              let img = res.data.housedata.img;
-              let info = res.data.housedata.information;
+              let title=res.data.housedata.neighborhood+res.data.housedata.district;
+              let img =res.data.housedata.img;
+              let info=res.data.housedata.information;
 
-              this.reloadPart(title, img, info);
+              this.reloadPart(title,img,info);
             });
 
             done();
           })
-          .catch(_ => {
-          });
+          .catch(_ => {});
     },
-    changeValue(v1, v2, v3) {
+    changeValue(v1,v2,v3){
 
     }
-  },
+    },
   computed:{
     housedata() {
       return store.state.houseList;
     }
   }
-
 }
 
 

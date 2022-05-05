@@ -21,12 +21,14 @@
       </div>
       <div>
       </div>
+<el-button @click()="connect()" style="position:absolute;bottom:200px;right: 50px" type="primary" >联系房主</el-button>
 </body>
 
 
 </template>
 
 <script>
+import router from "@/router";
 import store from "@/store";
 export default {
   name: "HouseInfo",
@@ -37,7 +39,10 @@ export default {
   },
 
   methods:{
-
+    connect(){
+      alert("被点了！");
+      router.push('/message');
+    }
   },
   computed:{
     housedata(){
