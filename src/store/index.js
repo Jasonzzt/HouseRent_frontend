@@ -13,7 +13,7 @@ export default new Vuex.Store({
     myInfo:{
       img:'https://img0.baidu.com/it/u=3286620577,661592788&fm=253&fmt=auto&app=138&f=JPEG?w=200&h=200',
       name:'zzt',
-      username:''
+      username:'1273302566@qq.com'
     },
     /* 别人的信息（特指聊天对象） */
     userInfo:{
