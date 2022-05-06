@@ -184,24 +184,17 @@ export default {
     },
     //搜索框，向后端传入输入的小区名，根据小区名显示房源列表
     research(){
-      //alert(this.input);
-      let formdata=new FormData();
-      formdata.append("neighborhood",this.input);
-      // formdata.append("location",this.value1);
-      // formdata.append("type",this.value2);
-      // formdata.append("cost",this.value3);
-      let config = {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      }
-      this.$axios.post("http://localhost:8080/getverifycode",formdata,config).then(res=>{
-        //返回对应房源信息
-        //reload
+     // alert(this.input);
+      store.commit("findHouse",{neighborhood:this.input});
 
-        this.reloadPart();
-      });
     },
+    // handleClose(done) {
+    //   this.$confirm('还有未保存的工作哦确定关闭吗？')
+    //       .then(_ => {
+    //         done();
+    //       })
+    //       .catch(_ => {});
+    // },
     handleClose(done) {
       this.$confirm('确定选择的信息吗？')
           .then(_ => {
@@ -211,22 +204,19 @@ export default {
             // formdata.append("location",this.value1);
             // formdata.append("type",this.value2);
             // formdata.append("cost",this.value3);
-            let config = {
-              headers: {
-                'Content-Type': 'multipart/form-data'
-              }
-            }
-            this.$axios.post("http://localhost:8080/getverifycode",formdata,config).then(res=>{
-              //返回对应房源信息
-
-              let title=res.data.housedata.neighborhood+res.data.housedata.district;
-              let img =res.data.housedata.img;
-              let info=res.data.housedata.information;
-
-              this.reloadPart(title,img,info);
-            });
+            // let config = {
+            //   headers: {
+            //     'Content-Type': 'multipart/form-data'
+            //   }
+            // }
+            // this.$axios.post("http://localhost:8080/getverifycode",formdata,config).then(res=>{
+            //   //返回对应房源信息
+            //
+            //
+            // });
 
             done();
+            this.reloadPart();
           })
           .catch(_ => {});
     },

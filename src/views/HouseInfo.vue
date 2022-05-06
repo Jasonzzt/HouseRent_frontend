@@ -15,13 +15,13 @@
             <span class="span1" style="text-align: center; position:absolute; margin-top: 100px;margin-left: 600px;font-size: 45px;color: #e5121f;font-weight: bold;"  >{{list.cost}}</span>
             <span class="span1" style="text-align: center; position:absolute; margin-top: 104px;margin-left: 711px;font-size: 25px;color: #e5121f;font-weight: bold; "  >元/月</span>
           </div>
+          <el-button @click="connect(list)" style="position:absolute;bottom:200px;right: 50px" type="primary" >联系房主</el-button>
           <span style="position: absolute;margin-left: -600px;margin-top: -250px;font-family: SimSun;font-weight: bold;font-size: 30px;color: #41b9a6">房屋详情:{{list.information}}</span>
         </div>
-        <el-button @click="connect(list)" style="position:absolute;bottom:200px;right: 50px" type="primary" >联系房主</el-button>
       </div>
       <div>
       </div>
-<el-button @click="connect()" style="position:absolute;bottom:200px;right: 50px" type="primary" >联系房主</el-button>
+
 </body>
 
 

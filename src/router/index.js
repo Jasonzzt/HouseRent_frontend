@@ -8,6 +8,7 @@ import UsrInfo from "@/views/UsrInfo.vue"
 import Message from "@/views/Message.vue";
 import HouseInfo from "@/views/HouseInfo";
 import HouseRelease from "@/views/HouseRelease";
+import HouseRecord from "@/views/houseRecord";
 Vue.use(VueRouter)
 
 const routes = [
@@ -47,6 +48,11 @@ const routes = [
         path:'/houseinfo',
         name:'Houseinfo',
         component: HouseInfo
+      },
+      {
+        path:'/houserecord',
+        name:'houseRecord',
+        component: HouseRecord
       },
       {
         path:'/houserelease',
