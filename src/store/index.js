@@ -86,7 +86,7 @@ export default new Vuex.Store({
         layer:'2楼',
         joint:'true',
         information:'不错',
-        host:''
+        host:'123'
       },
       {
         id:'002',
@@ -121,7 +121,7 @@ export default new Vuex.Store({
       let i;
       let flag=false;
       for(i=0;i<state.userList.length;i++) {
-        if (state.userList[i].username == data.host) {//获取到的是对应房屋的信息，根据其中host来获取对应的卖家信息
+        if (state.userList[i].username == data.username) {//获取到的是对应房屋的信息，根据其中host来获取对应的卖家信息
           flag = true;//判断是否已存在，若存在直接跳转到聊天界面
           state.userInfo.img=state.userList[i].img;
           state.userInfo.name=state.userList[i].name;
