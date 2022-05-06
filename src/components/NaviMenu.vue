@@ -52,7 +52,7 @@ export default {
         {
           index: "2",
           name: "租房记录",
-          child: [{ index: "2-1", name: "合同期内租房" },{ index: "2-2", name: "已完成租赁" },{ index: "2-3", name: "已收藏租赁住房" }]
+          child: [{ index: "goingorder", name: "合同期内租房" },{ index: "finishedorder", name: "已完成租赁" },{ index: "markedorder", name: "已收藏租赁住房" }]
         },
 
       ],
