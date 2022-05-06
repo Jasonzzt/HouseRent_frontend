@@ -102,7 +102,7 @@ export default new Vuex.Store({
         host:''
       }
     ],
-    choicedList:[
+    chosenList:[
 
     ]
   },
@@ -112,12 +112,79 @@ export default new Vuex.Store({
       //alert(state.userInfo.name)
     },
     //搜索栏功能
-    findHouse(state,data){
+    researchHouse(state,data){
+      if(data.neighborhood=='')
+        alert('请输入信息');
+      else{
+        state.chosenList=[];
+        //在houseList里面遍历，符合条件的就放到choiceList里面
+        let i=0;//遍历
+        let flag=false;//看是否有数据
+        for(i=0;i<state.houseList.length;i++){
+          if(data.neighborhood==state.houseList[i].neighborhood){
+            state.chosenList.push(state.houseList[i]);
+            flag=true;
+          }
+        }
+        if(flag==false)//没有符合要求的
+          alert("暂无此小区的房源");
+      }
+    },
+    selectHouse(state,data){
+      //初始化置空
+      state.chosenList=[];
+      //在houseList里面遍历，符合条件的就放到choiceList里面
+      let i=0;//遍历
+      let districtCount=0;
+      let districtFlag=false;
+      let typeCount=0;
+      let typeFlag=false;
+      let costCount=0;
+      let costFlag=false;
 
+      let flag=false;//看chosenList中是否有数据
 
+      //传入的data为选中值所组成的数组，需要挨个遍历
+      for(i=0;i<state.houseList.length;i++){
+        //地区
+        for(districtCount=0;districtCount<data.district.length;i++){
+          //满足其中的一个条件
+          if(data.district[areaCount]=='不限'||data.district[areaCount]==state.houseList[i].district) {
+            districtFlag = true;
+            break;
+          }
+        }
+        //户型
+        for(typeCount=0;typeCount<data.type.length;i++){
+          if(data.type[typeCount]=='不限'||data.type[typeCount]==state.houseList[i].type) {
+            typeFlag = true;
+            break;//满足其中的一个条件
+          }
+        }
+        //租金
+        for(costCount=0;costCount<data.cost.length;i++){
+            switch(data.cost[costCount]){
+              case'不限': costFlag = true; break;
+              case'1500元以下': if(state.houseList[i].cost<1500) costFlag=true; break;
+              case'1500-3000元': if(1500<=state.houseList[i].cost<3000) costFlag=true; break;
+              case'3000-4500元': if(3000<=state.houseList[i].cost<4500) costFlag=true; break;
+              case'4500-6000元': if(4500<=state.houseList[i].cost<6000) costFlag=true; break;
+              case'6000元以上': if(6000<=state.houseList[i].cost) costFlag=true; break;
+              default: break;
+          }
+        }
+        //同时满足时放到chosenList里面
+        if(districtFlag==true&&typeFlag==true&&costFlag==true){
+          state.chosenList.push(state.houseList[i]);
+          flag=true;
+        }
+      }
+      if(flag==false)//没有符合要求的
+        alert("无对应房源");
     },
     //侧边栏添加用户
     addUser(state,data){
+      alert('函数执行');
       let i;
       let flag=false;
       for(i=0;i<state.userList.length;i++) {
@@ -148,6 +215,7 @@ export default new Vuex.Store({
             state.userInfo.username=msg.myInfo.username;
         })
       }
+      alert('函数执行结束');
     },
     addMessage(state, data) {
       let i;

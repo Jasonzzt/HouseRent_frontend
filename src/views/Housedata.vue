@@ -9,7 +9,7 @@
         </el-carousel>
     </div>
 
-    <el-input v-if="isReloadData" v-model="input" ref="neighborhood" size="medium" placeholder="请输入小区名" style="width:300px" ></el-input>
+    <el-input v-model="input" ref="neighborhood" size="medium" placeholder="请输入小区名" style="width:300px" ></el-input>
     <el-button  @click="research()" type="primary" style="margin-left: 16px;">搜索</el-button>
     <el-button @click="drawer = true" type="primary" style="margin-left: 16px;">
       信息选择
@@ -28,7 +28,7 @@
    <!--  三个选择器-->
     <div class="selectBlock">
       <span>地区 &emsp;</span>
-      <el-select @change="changeValue(value1,value2,value3)"  v-model="value1" multiple popper-append-to-body="false" filterable placeholder="请选择">
+      <el-select  v-model="value1" multiple popper-append-to-body="false" filterable placeholder="请选择">
         <el-option
             v-for="item in locationOptions"
             :key="item.value1"
@@ -40,7 +40,7 @@
 
   <div class="selectBlock">
       <span>户型 &emsp;</span>
-      <el-select @change="changeValue(value1,value2,value3)" v-model="value2" multiple popper-append-to-body="false" filterable placeholder="请选择">
+      <el-select v-model="value2" multiple popper-append-to-body="false" filterable placeholder="请选择">
         <el-option
             v-for="item in typeOptions"
             :key="item.value2"
@@ -52,7 +52,7 @@
 
      <div class="selectBlock">
         <span>租金 &emsp;</span>
-        <el-select @change="changeValue(value1,value2,value3)" v-model="value3" multiple  popper-append-to-body="false"  filterable placeholder="请选择">
+        <el-select  v-model="value3" multiple  popper-append-to-body="false"  filterable placeholder="请选择">
           <el-option
               v-for="item in costOptions"
               :key="item.value3"
@@ -64,7 +64,7 @@
       <el-button style="position:absolute;bottom:50px;z-index: 10" type="primary" @click="$refs.drawer.closeDrawer()" >确定</el-button>
     </el-drawer>
 
-    <el-table :data="housedata" v-if="isReloadData" stripe style="width: 100%; cursor: pointer;border-radius: 25px; " :show-header='false' >
+    <el-table :data="housedata"  stripe style="width: 100%; cursor: pointer;border-radius: 25px; " :show-header='false' >
       <el-table-column  label="房子" >
         <template slot-scope="scope" >
           <div @click="moreInfo(scope.row)" >
@@ -94,62 +94,60 @@ export default {
 
   data() {
     return {
-      //局部刷新标识
-      isReloadData:true,
       //搜索栏输入器
       input: '',
       //抽屉内三个的选择器
       locationOptions: [{
-        value1: 'loc1',
+        value1: '不限',
         label: '不限'
       }, {
-        value1: 'loc2',
+        value1: '江宁区',
         label: '江宁区'
       }, {
-        value1: 'loc3',
+        value1: '栖霞区',
         label: '栖霞区'
       }, {
-        value1: 'loc4',
-        label: '鼓楼'
+        value1: '鼓楼区',
+        label: '鼓楼区'
       }, {
-        value1: 'loc5',
-        label: '秦淮'
+        value1: '秦淮区',
+        label: '秦淮区'
       }],
 
       typeOptions: [{
-        value2: 'ty1',
+        value2: '不限',
         label: '不限'
       }, {
-        value2: 'ty2',
+        value2: '一室',
         label: '一室'
       }, {
-        value2: 'ty3',
+        value2: '两室',
         label: '两室'
       }, {
-        value2: 'ty4',
+        value2: '三室',
         label: '三室'
       }, {
-        value2: 'ty5',
+        value2: '三室以上',
         label: '三室以上'
       }],
 
       costOptions: [{
-        value3: 'c1',
+        value3: '不限',
         label: '不限'
       }, {
-        value3: 'c2',
+        value3: '1500元以下',
         label: '1500元以下'
       }, {
-        value3: 'c3',
+        value3: '1500-3000元',
         label: '1500-3000元'
       }, {
-        value3: 'c4',
+        value3: '3000-4500元',
         label: '3000-4500元'
       }, {
-        value3: 'c5',
+        value3: '4500-6000元',
         label: '4500-6000元'
       }, {
-        value3:'c6',
+        value3:'6000元以上',
         label: '6000元以上'
       }],
       value1: '',
@@ -164,65 +162,30 @@ export default {
     };
   },
   methods: {
-    //刷新当前界面
-    reloadPart(){
-      this.isReloadData=false;
-      this.$nextTick(()=> {
-        this.isReloadData = true
-        alert("刷新")
-        //housedata.push("title:")
-      })
-      },
     //跳转详情界面
     moreInfo(row){
       //alert(row.title);
       store.commit("setHouseInfo",{id:row.id});
       router.push('/houseinfo');
     },
+    //发布房源
     release(){
       router.push('/houserelease');
     },
     //搜索框，向后端传入输入的小区名，根据小区名显示房源列表
     research(){
      // alert(this.input);
-      store.commit("findHouse",{neighborhood:this.input});
-
+      store.commit("researchHouse",{neighborhood:this.input});
     },
-    // handleClose(done) {
-    //   this.$confirm('还有未保存的工作哦确定关闭吗？')
-    //       .then(_ => {
-    //         done();
-    //       })
-    //       .catch(_ => {});
-    // },
+    //抽屉关闭时
     handleClose(done) {
-      this.$confirm('确定选择的信息吗？')
-          .then(_ => {
-            //测试一下函数有没有进行
-            // this.reloadPart();
-            // let formdata=new FormData();
-            // formdata.append("location",this.value1);
-            // formdata.append("type",this.value2);
-            // formdata.append("cost",this.value3);
-            // let config = {
-            //   headers: {
-            //     'Content-Type': 'multipart/form-data'
-            //   }
-            // }
-            // this.$axios.post("http://localhost:8080/getverifycode",formdata,config).then(res=>{
-            //   //返回对应房源信息
-            //
-            //
-            // });
+      alert("抽屉关闭");
+      done();
+      //value1\2\3中的值为当前选中值所组成的数组
+      store.commit("selectHouse",{district:this.value1,type:this.value2,cost:this.value3});
 
-            done();
-            this.reloadPart();
-          })
-          .catch(_ => {});
     },
-    changeValue(v1,v2,v3){
 
-    }
     },
   computed:{
     housedata() {

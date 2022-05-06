@@ -15,8 +15,9 @@
             <span class="span1" style="text-align: center; position:absolute; margin-top: 100px;margin-left: 600px;font-size: 45px;color: #e5121f;font-weight: bold;"  >{{list.cost}}</span>
             <span class="span1" style="text-align: center; position:absolute; margin-top: 104px;margin-left: 711px;font-size: 25px;color: #e5121f;font-weight: bold; "  >元/月</span>
           </div>
-          <span style="position: absolute;margin-left: -600px;margin-top: -250px;font-family: SimSun;font-weight: bold;font-size: 30px;color: #41b9a6">房屋详情:{{list.information}}</span>
           <el-button @click="connect(list)" style="position:absolute;bottom:200px;right: 50px" type="primary" >联系房主</el-button>
+          <span style="position: absolute;margin-left: -600px;margin-top: -250px;font-family: SimSun;font-weight: bold;font-size: 30px;color: #41b9a6">房屋详情:{{list.information}}</span>
+
         </div>
 
 
@@ -45,8 +46,8 @@ export default {
       //在全局变量userlist里面加入这个人（根据id判断是否已存在）
       //把全局变量的userinfo改成这个人
       store.commit("addUser",{username:list.host});
+      //alert('被点了！');
       router.push('/message');
-
     }
   },
   computed:{
