@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import Element from "element-ui";
+import Housedata from "@/views/Housedata";
 
 Vue.use(Vuex)
 
@@ -83,7 +85,7 @@ export default new Vuex.Store({
         type:'两室',
         area:'100',
         cost:'2000',
-        layer:'2楼',
+        layer:'2层',
         joint:'true',
         information:'不错',
         host:'123'
@@ -96,7 +98,7 @@ export default new Vuex.Store({
         type:'三室',
         area:'150',
         cost:'3000',
-        layer:'13楼',
+        layer:'13层',
         joint:'false',
         information:'还行',
         host:''
@@ -112,24 +114,7 @@ export default new Vuex.Store({
       //alert(state.userInfo.name)
     },
     //搜索栏功能
-    researchHouse(state,data){
-      if(data.neighborhood=='')
-        alert('请输入信息');
-      else{
-        state.chosenList=[];
-        //在houseList里面遍历，符合条件的就放到choiceList里面
-        let i=0;//遍历
-        let flag=false;//看是否有数据
-        for(i=0;i<state.houseList.length;i++){
-          if(data.neighborhood==state.houseList[i].neighborhood){
-            state.chosenList.push(state.houseList[i]);
-            flag=true;
-          }
-        }
-        if(flag==false)//没有符合要求的
-          alert("暂无此小区的房源");
-      }
-    },
+
     selectHouse(state,data){
       //初始化置空
       state.chosenList=[];
@@ -142,49 +127,91 @@ export default new Vuex.Store({
       let costCount=0;
       let costFlag=false;
 
-      let flag=false;//看chosenList中是否有数据
-
+      //let flag=false;//看chosenList中是否有数据
+      //alert("开始循环")
       //传入的data为选中值所组成的数组，需要挨个遍历
       for(i=0;i<state.houseList.length;i++){
+        //alert(i)
+        districtFlag=false;
+        typeFlag=false;
+        costFlag=false;
         //地区
-        for(districtCount=0;districtCount<data.district.length;i++){
+        for(districtCount=0;districtCount<data.district.length;districtCount++){
           //满足其中的一个条件
-          if(data.district[areaCount]=='不限'||data.district[areaCount]==state.houseList[i].district) {
+          if(data.district[districtCount]=='不限'||data.district[districtCount]==state.houseList[i].district) {
             districtFlag = true;
+            //alert("地区")
             break;
           }
         }
+        if(districtFlag==false)continue;
         //户型
-        for(typeCount=0;typeCount<data.type.length;i++){
+        for(typeCount=0;typeCount<data.type.length;typeCount++){
           if(data.type[typeCount]=='不限'||data.type[typeCount]==state.houseList[i].type) {
             typeFlag = true;
+            //alert("户型")
             break;//满足其中的一个条件
           }
         }
+        if(typeFlag==false)continue;
         //租金
-        for(costCount=0;costCount<data.cost.length;i++){
-            switch(data.cost[costCount]){
-              case'不限': costFlag = true; break;
-              case'1500元以下': if(state.houseList[i].cost<1500) costFlag=true; break;
-              case'1500-3000元': if(1500<=state.houseList[i].cost<3000) costFlag=true; break;
-              case'3000-4500元': if(3000<=state.houseList[i].cost<4500) costFlag=true; break;
-              case'4500-6000元': if(4500<=state.houseList[i].cost<6000) costFlag=true; break;
-              case'6000元以上': if(6000<=state.houseList[i].cost) costFlag=true; break;
-              default: break;
+        for(costCount=0;costCount<data.cost.length;costCount++){
+          if(data.cost[costCount]=='不限'){
+            costFlag=true;
+            break;
+          }else if(data.cost[costCount]=='1500以下'&&state.houseList[i].cost < 1500){
+            costFlag=true;
+            break;
+          }else if(data.cost[costCount]=='1500-3000元'&&1500 <= state.houseList[i].cost&& state.houseList[i].cost< 3000){
+            costFlag = true;
+            break;
+          }else if(data.cost[costCount]=='3000-4500元'&&3000 <= state.houseList[i].cost &&state.houseList[i].cost< 4500){
+            costFlag=true;
+            break;
+          }
+          else if(data.cost[costCount]=='4500-6000元'&&4500 <= state.houseList[i].cost &&state.houseList[i].cost< 6000){
+            costFlag=true;
+            break;
+          }else if(data.cost[costCount]=='6000元以上'&&6000 <= state.houseList[i].cost){
+            costFlag=true;
+            break;
           }
         }
+        if(costFlag==false)continue;
         //同时满足时放到chosenList里面
-        if(districtFlag==true&&typeFlag==true&&costFlag==true){
+        else{
           state.chosenList.push(state.houseList[i]);
-          flag=true;
+          //alert("找到一个")
         }
+
       }
-      if(flag==false)//没有符合要求的
-        alert("无对应房源");
+      //alert("hello")
+      if(state.chosenList.length==0)//没有符合要求的
+      {
+        Element.Message.error("无对应房源");
+        Housedata.data().housedata=state.houseList;//防止页面无数据
+      }
+      else{
+        //alert("数据源更换")
+        //Housedata.data().housedata=state.chosenList;
+
+      }
+    },
+    researchHouse(state,data){
+      state.chosenList=[];
+      //在houseList里面遍历，符合条件的就放到choiceList里面
+      let i=0;//遍历
+      for(i=0;i<state.houseList.length;i++){
+        if(state.houseList[i].neighborhood.indexOf(data.neighborhood)>=0)//实现子字符串添加
+          state.chosenList.push(state.houseList[i]);
+      }
+      if(state.chosenList.length==0){
+        Element.Message.error("该小区暂无在租房产");
+        Housedata.data().housedata=state.houseList;//防止页面无数据
+      }
     },
     //侧边栏添加用户
     addUser(state,data){
-      alert('函数执行');
       let i;
       let flag=false;
       for(i=0;i<state.userList.length;i++) {
@@ -215,7 +242,6 @@ export default new Vuex.Store({
             state.userInfo.username=msg.myInfo.username;
         })
       }
-      alert('函数执行结束');
     },
     addMessage(state, data) {
       let i;

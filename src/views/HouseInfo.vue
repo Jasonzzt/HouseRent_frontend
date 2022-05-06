@@ -10,7 +10,7 @@
               <span v-if="list.joint=='false'" class="span1" style="text-align: center; position:absolute; margin-top: 20px;margin-left: 350px;font-size: 20px " >独租</span>
             <span class="span1" style="text-align: center; position:absolute; margin-top: 100px;margin-left: 120px;font-size: 20px "  >{{list.district}}</span>
             <span class="span1" style="text-align: center; position:absolute; margin-top: 100px;margin-left: 350px;font-size: 20px "  >{{list.neighborhood}}</span>
-            <span class="span1" style="text-align: center; position:absolute; margin-top: 180px;margin-left: 120px;font-size: 20px "  >{{list.area+"平方米"}}</span>
+            <span class="span1" style="text-align: center; position:absolute; margin-top: 180px;margin-left: 120px;font-size: 20px "  >{{list.area}}</span>
             <span class="span1" style="text-align: center; position:absolute; margin-top: 180px;margin-left: 350px;font-size: 20px "  >{{list.layer}}</span>
             <span class="span1" style="text-align: center; position:absolute; margin-top: 100px;margin-left: 600px;font-size: 45px;color: #e5121f;font-weight: bold;"  >{{list.cost}}</span>
             <span class="span1" style="text-align: center; position:absolute; margin-top: 104px;margin-left: 711px;font-size: 25px;color: #e5121f;font-weight: bold; "  >元/月</span>

@@ -158,6 +158,7 @@ export default {
       drawer: false,
 
       direction: 'ttb',
+      housedata:this.$store.state.houseList
 
     };
   },
@@ -176,14 +177,17 @@ export default {
     research(){
      // alert(this.input);
       store.commit("researchHouse",{neighborhood:this.input});
+      this.$data.housedata=this.$store.state.chosenList;
     },
     //抽屉关闭时
     handleClose(done) {
-      alert("抽屉关闭");
+      //alert("抽屉关闭");
       done();
       //value1\2\3中的值为当前选中值所组成的数组
+      //alert("?")
+      //alert(this.value1[0])
       store.commit("selectHouse",{district:this.value1,type:this.value2,cost:this.value3});
-
+      this.$data.housedata=this.$store.state.chosenList;
     },
 
     },
