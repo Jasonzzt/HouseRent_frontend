@@ -29,8 +29,10 @@ import store from "@/store";
 export default {
   name: "FinishedOrder",
 
-  data:{
+  data(){
+    return{
 
+    }
   },
   methods:{
 

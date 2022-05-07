@@ -27,8 +27,10 @@ import store from "@/store";
 
 export default {
   name: "MarkedOrder",
-  data:{
+  data(){
+    return{
 
+    }
   },
   methods:{
 

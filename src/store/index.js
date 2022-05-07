@@ -14,8 +14,9 @@ export default new Vuex.Store({
     /* 我的信息 */
     myInfo: {
       img: 'https://img0.baidu.com/it/u=3286620577,661592788&fm=253&fmt=auto&app=138&f=JPEG?w=200&h=200',
-      name: '',
-      username: ''
+      name: '一个名字',
+      username: '12345678990',
+      key:'8888888'
     },
     /* 别人的信息（特指聊天对象） */
     userInfo: {
@@ -79,7 +80,9 @@ export default new Vuex.Store({
     houseList:[
       {
         id:'001',
-        img:['https://pic4.ajkimg.com/display/xinfang/b57d6d4baf27754c01996e42cda8fece/403x335n.jpg'],
+        img:['https://pic1.ajkimg.com/display/xinfang/0eff482663691611c3f1193ba712bfb8/840x563.jpg' ,
+          'https://pic4.ajkimg.com/display/xinfang/b57d6d4baf27754c01996e42cda8fece/403x335n.jpg'
+          ],
         neighborhood: '幸福小区',
         district:'江宁区',
         type:'两室',
@@ -299,6 +302,21 @@ export default new Vuex.Store({
 
         })
       }
+    },
+    refreshMyData(state,data){
+      //若未填写，认为未修改
+      if(data.newName==''){
+        alert('新姓名为空');
+      }else{
+        state.myInfo.name=data.newName;
+      }
+
+      if(data.newKey==''){
+        alert('新姓名为空');
+      }else{
+        state.myInfo.key=data.newKey;
+      }
+
     }
     },
     actions: {},

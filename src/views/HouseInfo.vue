@@ -3,7 +3,18 @@
       <div v-for="(list,index) in housedata" :key="index">
         <div v-if="list.id==houseInfo.id">
           <div>
-            <img :src="list.img[0]" style="margin-top: 60px;margin-left:-800px;border-radius: 8px;width:650px;height:360px"></img>
+            <div class="block" style="margin-top: 60px;margin-left:-800px;border-radius: 8px;width:650px;height:360px;display: inline-block">
+              <el-carousel
+                  trigger="click"
+                  height="460px"
+                  direction="vertical" :autoplay="true"
+              >
+                <el-carousel-item v-for="item in list.img" :key="item">
+                  <img :src="item" style="width: 95%;">
+                </el-carousel-item>
+              </el-carousel>
+            </div>
+<!--            <img :src="list.img[0]" style="margin-top: 60px;margin-left:-800px;border-radius: 8px;width:650px;height:360px"></img>-->
             <span class="span" style="text-align: center; position:absolute; margin-top: -40px;margin-left: 100px;font-size: 40px;font-family: SimSun;font-weight: bold"  >{{list.district+"   "+list.neighborhood+"   "+list.type}}</span>
             <span class="span1" style="text-align: center; position:absolute; margin-top: 20px;margin-left: 120px;font-size: 20px " >{{list.type}}</span>
               <span v-if="list.joint=='true'" class="span1" style="text-align: center; position:absolute; margin-top: 20px;margin-left: 350px;font-size: 20px " >合租</span>
@@ -19,8 +30,6 @@
           <span style="position: absolute;margin-left: -600px;margin-top: -250px;font-family: SimSun;font-weight: bold;font-size: 30px;color: #41b9a6">房屋详情:{{list.information}}</span>
 
         </div>
-
-
       </div>
       <div>
       </div>
@@ -65,29 +74,44 @@ export default {
 </script>
 
 <style scoped>
-.box .left{
-  width:40%;
-  height:500px;
-  background-color:#507D57;
-  float:left;
+.el-carousel__item h3 {
+  color: #475669;
+  font-size: 14px;
+  opacity: 0.75;
+  line-height: 150px;
+  margin: 0;
 }
 
-.box .right{
-  width:60%;
-  height:500px;
-  background-color:#95B17F;
-  float:left;
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
 }
 
-.houseTitle{
+.el-carousel__item:nth-child(2n+1) {
+  background-color: #d3dce6;
+}
+/*指示器*/
+/deep/ .el-carousel__indicators--horizontal {
   position: absolute;
-  margin-top: -100px;
-  margin-left: 60px;
+  left: auto;
+  bottom: 0px;
+  transform: unset;
+  right: 2%;
 }
 
-.button{
-  position:absolute;
-  margin-top: 450px;
-  margin-left:5%;
+/*指示器按钮*/
+/deep/ .el-carousel__button {
+  width: 10px;
+  height: 10px;
+  bottom: 0px;
+  border: none;
+  margin-bottom: 0px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.2);
 }
+
+/*指示器激活按钮*/
+/deep/ .is-active .el-carousel__button {
+background: #3f8ec8;
+}
+
 </style>
