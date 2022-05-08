@@ -21,18 +21,18 @@
           :limit="3"
           :on-exceed="handleExceed"
       >
-        <el-button style="position:absolute;right:500px;top: 250px" size="small" type="primary">点击上传本地图片</el-button>
+        <el-button v-show="isShow" style="position:absolute;right:200px;top: 250px" size="small" type="primary">点击上传本地图片</el-button>
       </el-upload>
     </div>
 
       <div style="position:absolute;margin-left: 0px;top: 200px">
-        <span style="font-size:40px">id</span>
-          <span style="font-size:40px;color:#41b9a6;margin-left: 40px">{{ mydata.username }}</span>
+        <span style="font-size:20px">id</span>
+          <span style="font-size:20px;color:#41b9a6;margin-left: 40px">{{ mydata.username }}</span>
       </div>
 
       <div style="position:absolute;margin-left: 0px;top: 300px" >
-        <span style="font-size:40px">姓名</span>
-        <span style="font-size:40px;color:#41b9a6;margin-left: 40px">{{ mydata.name }}</span>
+        <span style="font-size:20px">姓名</span>
+        <span style="font-size:20px;color:#41b9a6;margin-left: 40px">{{ mydata.name }}</span>
       </div>
     <input
         style="position: absolute;top: 480px;left: 120px"
@@ -43,8 +43,8 @@
     ></input>
 
     <div style="position:absolute;margin-left: 0px;top: 420px" >
-      <span style="font-size:40px">密码</span>
-      <span style="font-size:40px;color:#41b9a6;margin-left: 40px">{{ mydata.key }}</span>
+      <span style="font-size:20px">密码</span>
+      <span style="font-size:20px;color:#41b9a6;margin-left: 40px">{{ mydata.key }}</span>
     </div>
     <input
         style="position: absolute;top: 600px;left: 120px"

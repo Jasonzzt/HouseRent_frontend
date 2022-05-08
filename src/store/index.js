@@ -91,7 +91,11 @@ export default new Vuex.Store({
         layer:'2层',
         joint:'true',
         information:'不错',
-        host:'123'
+        host:'123',
+        rentTime:'',
+        rentPeriod:'',
+        starred:false,
+        interactPeople:[]
       },
       {
         id:'002',
@@ -104,7 +108,11 @@ export default new Vuex.Store({
         layer:'13层',
         joint:'false',
         information:'还行',
-        host:''
+        host:'',
+        rentTime:'',
+        rentPeriod:'',
+        starred:false,
+        interactPeople:[]
       }
     ],
     chosenList:[
