@@ -79,6 +79,7 @@
             <span class="span1" style="text-align: center; position:absolute; margin-top: 154px;margin-left: 711px;font-size: 25px;color: #e5121f;font-weight: bold; "  >元/月</span>
           </div>
         </template>
+
       </el-table-column>
     </el-table>
 
@@ -166,7 +167,7 @@ export default {
     //跳转详情界面
     moreInfo(row){
       //alert(row.title);
-      store.commit("setHouseInfo",{id:row.id});
+      store.commit("setHouseInfo",{id:row.id,host:row.host});
       router.push('/houseinfo');
     },
     //发布房源

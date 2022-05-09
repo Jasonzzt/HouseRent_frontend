@@ -50,19 +50,23 @@
           class="upload-demo"
           ref="upload"
           action="http://localhost:8080/uploadimage"
+          :on-success="onSuccess"
           :on-preview="handlePreview"
           :on-remove="handleRemove"
           :file-list="fileList"
+          multiple
           :auto-upload="false" style="margin-top: -140px;">
         <el-button slot="trigger" size="large" type="primary" style="margin-left: -65px">上传图片</el-button>
         <!--      <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>-->
-        <el-button type="success" @click="onSubmit"  style="margin-left: 40px">立即发布</el-button>
+        <el-button type="success" @click="submitUpload"  style="margin-left: 40px">立即发布</el-button>
       </el-upload>
     </div>
   </el-form>
 </template>
 
 <script>
+import store from "@/store";
+
 export default {
   name: "HouseRelease",
 
@@ -71,14 +75,14 @@ export default {
       houseForm: {
         neighborhood: '',
         district: '',
-        delivery: false,
+        //delivery: false,
         type: '',
         layer: ''+"层",
         information: '',
         joint:'',
-        area:''+"平方米",
-        host:'',
-        cost:''+""
+        area:''+"㎡",
+        host:this.$store.state.myInfo.username,
+        cost:''
       },
       fileList: [],
     };
@@ -90,13 +94,52 @@ export default {
     },
 
     submitUpload() {
-      this.$refs.upload.submit()
+      let { uploadFiles } = this.$refs.upload
+      let form = new FormData()
+      form.append("neighborhood",this.houseForm.neighborhood);
+      form.append("")
+      let status = true
+      // 在这里对每一张图片进行大小的校验，如果不符合则提示，所有不符合的都提示，校验完成后只要有不符合条件的就不执行下面的操作
+      uploadFiles.forEach(item => {
+        const size = item.raw.size / 1024 <= 500
+        if (!size) {
+          this.$message.error(`${item.raw.name}大小超过500KB`)
+          status = false
+          return
+        }
+        form.append('image[]', item.raw)
+      })
+      if (!status) {
+        return
+      }
+      let config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+      this.$axios.post("http://localhost:8080/uploadimage",form, config)
+      // 符合条件后再将这个FormData对象传递给后端
+      //调取接口上传form参数
     },
     handleRemove(file, fileList) {
       console.log(file, fileList);
     },
     handlePreview(file) {
       console.log(file);
+    },
+    onSuccess(res){
+      if(res=="true")
+        Element.Message.success("上传成功");
+      let config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+      this.$axios.post('http://localhost:8080/gethouse', new FormData,config).then(res => {
+        let msg = res.data.msg;
+        //alert(JSON.stringify(msg[0]));
+        store.commit("setHouseData", {houseList: msg});
+      })
     }
   }
 

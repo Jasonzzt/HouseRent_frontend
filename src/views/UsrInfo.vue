@@ -21,28 +21,32 @@
           :limit="3"
           :on-exceed="handleExceed"
       >
-        <el-button v-show="isShow" style="position:absolute;right:200px;top: 250px" size="small" type="primary">点击上传本地图片</el-button>
+        <el-button v-show="isShow" style="position:absolute;right:675px;bottom: 100px" size="small" type="primary">点击上传本地图片</el-button>
       </el-upload>
     </div>
 
-      <div style="position:absolute;margin-left: 0px;top: 200px">
-        <span style="font-size:20px">id</span>
-          <span style="font-size:20px;color:#41b9a6;margin-left: 40px">{{ mydata.username }}</span>
+
+      <div style="position:absolute;margin-left: 700px;top: 200px">
+        <span style="font-size:20px;font-weight: bold">ID</span>
+          <span style="font-size:20px;color:#41b9a6;margin-left: 40px;font-weight: bold">{{ mydata.username }}</span>
       </div>
 
-      <div style="position:absolute;margin-left: 0px;top: 300px" >
-        <span style="font-size:20px">姓名</span>
-        <span style="font-size:20px;color:#41b9a6;margin-left: 40px">{{ mydata.name }}</span>
+      <div style="position:absolute;margin-left: 690px;top: 300px" >
+        <span style="font-size:20px;font-weight: bold">昵称</span>
+        <span v-show="!isShow" style="font-size:20px;color:#41b9a6;margin-left: 40px;font-weight: bold">{{ mydata.name }}</span>
       </div>
-    <input
-        style="position: absolute;top: 480px;left: 120px"
-        placeholder="输入新的姓名"
-        class="input"
+    <el-input
+        style="position: absolute;top: 305px;left:770px;width:200px"
+        type="text"
         v-model="newName"
+        maxlength="10"
+        show-word-limit
         v-show="isShow"
-    ></input>
+    ></el-input>
 
-    <div style="position:absolute;margin-left: 0px;top: 420px" >
+
+
+<!--    <div style="position:absolute;margin-left: 0px;top: 420px" >
       <span style="font-size:20px">密码</span>
       <span style="font-size:20px;color:#41b9a6;margin-left: 40px">{{ mydata.key }}</span>
     </div>
@@ -51,7 +55,7 @@
         placeholder="输入新的密码"
         v-show="isShow"
         v-model="newKey">
-    </input>
+    </input>-->
 
     <div> </div>
   </div>
@@ -77,10 +81,9 @@ export default {
   methods:{
     change(){
       this.isShow=true;
-
+      this.newName=this.mydata.name;
       },
     commit(){
-      alert("信息修改成功");
       this.isShow=false;
       store.commit("refreshMyData",{newName:this.newName,newKey:this.newKey});
     },
@@ -100,9 +103,10 @@ export default {
   },
   computed:{
     mydata() {
-      return store.state.myInfo;//对了
+      return store.state.myInfo;
     }
   },
+
 }
 </script>
 

@@ -8,7 +8,6 @@ import UsrInfo from "@/views/UsrInfo.vue"
 import Message from "@/views/Message.vue";
 import HouseInfo from "@/views/HouseInfo";
 import HouseRelease from "@/views/HouseRelease";
-import FinishedOrder from "@/views/FinishedOrder";
 import GoingOrder from "@/views/GoingOrder";
 import MarkedOrder from "@/views/MarkedOrder";
 Vue.use(VueRouter)
@@ -55,11 +54,6 @@ const routes = [
         path:'/houserelease',
         name: "HouseRelease",
         component: HouseRelease
-      },
-      {
-        path:'/finishedorder',
-        name: "FinishedOrder",
-        component: FinishedOrder
       },
       {
         path:'/goingorder',

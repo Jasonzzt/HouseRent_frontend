@@ -14,9 +14,11 @@ export default new Vuex.Store({
     /* 我的信息 */
     myInfo: {
       img: 'https://img0.baidu.com/it/u=3286620577,661592788&fm=253&fmt=auto&app=138&f=JPEG?w=200&h=200',
-      name: '一个名字',
-      username: '12345678990',
-      key:'8888888'
+      name: 'zzt',
+      username: '123'
+    },
+    myHouseList:{
+      marked:[],
     },
     /* 别人的信息（特指聊天对象） */
     userInfo: {
@@ -25,7 +27,8 @@ export default new Vuex.Store({
       username: ''
     },
     houseInfo: {
-      id:''
+      id:'',
+      host:''
     },
     /* 用户列表 */
     userList: [{
@@ -86,16 +89,12 @@ export default new Vuex.Store({
         neighborhood: '幸福小区',
         district:'江宁区',
         type:'两室',
-        area:'100',
+        area:'100㎡',
         cost:'2000',
         layer:'2层',
         joint:'true',
         information:'不错',
-        host:'123',
-        rentTime:'',
-        rentPeriod:'',
-        starred:false,
-        interactPeople:[]
+        host:'123'
       },
       {
         id:'002',
@@ -103,21 +102,15 @@ export default new Vuex.Store({
         neighborhood: '华都福林',
         district:'建邺区',
         type:'三室',
-        area:'150',
+        area:'150㎡',
         cost:'3000',
         layer:'13层',
         joint:'false',
         information:'还行',
-        host:'',
-        rentTime:'',
-        rentPeriod:'',
-        starred:false,
-        interactPeople:[]
+        host:'111'
       }
     ],
-    chosenList:[
-
-    ]
+    chosenList:[]
   },
   mutations: {
     setUserInfo(state, data) {
@@ -243,7 +236,7 @@ export default new Vuex.Store({
             'Content-Type': 'multipart/form-data'
           }
         }
-        this.$axios.post('http://localhost:8080/getuser', formdata,config).then(res =>{
+        state.athis.$axios.post('http://localhost:8080/getuser', formdata,config).then(res =>{
           let msg=res.data.msg;
           //将卖家信息增加到侧边栏中
             state.userList.push({name: msg.myInfo.name, img:msg.myInfo.img,username: msg.myInfo.username})
@@ -270,7 +263,8 @@ export default new Vuex.Store({
       }
     },
     setHouseInfo(state, data) {
-      state.houseInfo = data;
+      state.houseInfo.host = data.host;
+      state.houseInfo.id=data.id;
       //alert(state.houseInfo.houseId);
     },
     setData(state, data) {
@@ -311,19 +305,20 @@ export default new Vuex.Store({
         })
       }
     },
-    refreshMyData(state,data){
-      //若未填写，认为未修改
-      if(data.newName==''){
-        alert('新姓名为空');
-      }else{
-        state.myInfo.name=data.newName;
+    mark(state,data){
+      let i;
+      for (i=0;i<state.myHouseList.marked.length;i++){
+        if(data.id==state.myHouseList.marked[i])
+          break;
       }
+      if(i==state.myHouseList.marked.length) {
+        state.myHouseList.marked.push(data.id);
+        Element.Message.success("收藏成功");
+      }
+      else
+        Element.Message.error("请勿重复收藏");
 
-      if(data.newKey==''){
-        alert('新姓名为空');
-      }else{
-        state.myInfo.key=data.newKey;
-      }
+
 
     }
     },

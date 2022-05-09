@@ -50,10 +50,13 @@ export default {
         { index: "housedata", name: "住房信息" },
         { index: "message", name: "我的消息" },
         {
-          index: "2",
-          name: "租房记录",
-          child: [{ index: "goingorder", name: "合同期内租房" },{ index: "finishedorder", name: "已完成租赁" },{ index: "markedorder", name: "已收藏租赁住房" }]
+          index: "markedorder",
+          name: "已收藏租赁住房",
         },
+        {
+          index:"goingorder",
+          name:"我的已发布住房"
+        }
 
       ],
     };
