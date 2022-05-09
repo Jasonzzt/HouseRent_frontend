@@ -318,8 +318,9 @@ export default new Vuex.Store({
       else
         Element.Message.error("请勿重复收藏");
 
-
-
+    },
+    refreshMyData(state,data){
+      state.myInfo.name=data.newName;
     }
     },
     actions: {},

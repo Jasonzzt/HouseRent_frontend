@@ -70,10 +70,8 @@ export default {
     return{
       isShow:false,
       newName:'',
-      newKey:'',
       form:{
         name:'',
-        password:'',
       },
       fileList: [],
     };
@@ -85,7 +83,7 @@ export default {
       },
     commit(){
       this.isShow=false;
-      store.commit("refreshMyData",{newName:this.newName,newKey:this.newKey});
+      store.commit("refreshMyData",{newName:this.newName});
     },
 
     handleRemove(file, fileList) {
