@@ -27,7 +27,7 @@
             <span class="span1" style="text-align: center; position:absolute; margin-top: 100px;margin-left: 600px;font-size: 45px;color: #e5121f;font-weight: bold;"  >{{list.cost}}</span>
             <span class="span1" style="text-align: center; position:absolute; margin-top: 104px;margin-left: 711px;font-size: 25px;color: #e5121f;font-weight: bold; "  >元/月</span>
           </div>
-          <el-button @click="mark(list)" style="position:absolute;bottom:200px;right: 200px" type="primary" >收藏房源</el-button>
+          <el-button @click="mark1(list)" style="position:absolute;bottom:200px;right: 200px" type="primary" >收藏房源</el-button>
             <el-button  @click="del(list)" style="position:absolute;bottom:200px;right: 50px" type="primary" >{{ houseInfo.host==myInfo.username?"删除房源":"联系房主" }}</el-button>
           <span style="position: absolute;margin-left: -600px;margin-top: -250px;font-family: SimSun;font-weight: bold;font-size: 30px;color: #41b9a6">房屋详情:{{list.information}}</span>
 
@@ -53,7 +53,7 @@ export default {
   },
 
   methods:{
-    connect(list){
+    del(list){
       //在全局变量userlist里面加入这个人（根据id判断是否已存在）
       //把全局变量的userinfo改成这个人
       if(this.houseInfo.host==this.myInfo.username)
@@ -68,8 +68,19 @@ export default {
         formdata.append("id",this.houseInfo.id);
         this.$axios.post('http://localhost:8080/deletehouse',formdata,config).then(res => {
           let msg=res.data;
-          if(msg=="true"){
+          if(msg==true){
             Element.Message.success("删除成功");
+            let formdata=new FormData();
+            let config = {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            }
+            this.$axios.post('http://localhost:8080/gethouse', formdata,config).then(res => {
+              let msg = res.data.msg;
+              //alert(JSON.stringify(msg[0]));
+              store.commit("setHouseData", {houseList: msg});
+            })
             router.push('/goingorder');
           }
           else{
@@ -83,11 +94,15 @@ export default {
       }
 
     },
-    del(list){
-
-    },
-    mark(list){
+    mark1(list){
+      for (let i=0;i<this.mark.length;i++){
+        if(list.id==this.mark[i]) {
+          Element.Message.error("请勿重复收藏");
+          return;
+        }
+      }
       store.commit("mark",{id:list.id});
+
     }
   },
   computed:{
@@ -99,6 +114,9 @@ export default {
 },
     myInfo(){
       return store.state.myInfo;
+    },
+    mark(){
+      return store.state.myHouseList.marked;
     }
   },
 }

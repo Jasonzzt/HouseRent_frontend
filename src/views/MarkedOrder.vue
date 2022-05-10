@@ -52,7 +52,8 @@ export default {
       }
       return tmp;
     }
-  }
+  },
+
 }
 </script>
 

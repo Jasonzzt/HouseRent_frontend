@@ -224,28 +224,24 @@ export default new Vuex.Store({
           state.userInfo.img=state.userList[i].img;
           state.userInfo.name=state.userList[i].name;
           state.userInfo.username=state.userList[i].username;
-          break;
+          return;
         }
       }
-      if(flag==false){//不存在时添加
-        //从后端获取对应的卖家信息，认为获得的信息是含有username,name,img的结构
-        let formdata=new FormData();
-        formdata.append("username",data.host);
-        let config = {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
+      let formdata=new FormData();
+      formdata.append("username",data.username);
+      let config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
         }
-        state.athis.$axios.post('http://localhost:8080/getuser', formdata,config).then(res =>{
-          let msg=res.data.msg;
-          //将卖家信息增加到侧边栏中
-            state.userList.push({name: msg.myInfo.name, img:msg.myInfo.img,username: msg.myInfo.username})
-          //将卖家信息放入userinfo
-            state.userInfo.img=msg.myInfo.img;
-            state.userInfo.name=msg.myInfo.name;
-            state.userInfo.username=msg.myInfo.username;
-        })
       }
+      state.athis.$axios.post('http://localhost:8080/getuser', formdata,config).then(res =>{
+        let msg=res.data.msg;
+        state.userInfo.img=msg.img;
+        state.userInfo.name=msg.name;
+        state.userInfo.username=msg.username;
+      })
+
+
     },
     addMessage(state, data) {
       let i;
@@ -278,6 +274,17 @@ export default new Vuex.Store({
     },
     setHouseData(state,data){
       state.houseList=data.houseList;
+      let formdata=new FormData();
+      let config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+      formdata.append("username",state.myInfo.username);
+      state.athis.$axios.post('http://localhost:8080/getmarked',formdata,config).then(res =>{
+        let msg=res.data;
+        state.myHouseList.marked=msg;
+      })
     },
     setWS(state, data,that) {
 
@@ -300,7 +307,7 @@ export default new Vuex.Store({
           let msg = res.data.msg;
           state.userList = msg.userlist;
           state.chatMessageList = msg.chatmessagelist;
-          alert(state.myInfo.username+"收到消息！")
+          //alert(state.myInfo.username+"收到消息！")
 
         })
       }
@@ -312,8 +319,33 @@ export default new Vuex.Store({
           break;
       }
       if(i==state.myHouseList.marked.length) {
-        state.myHouseList.marked.push(data.id);
-        Element.Message.success("收藏成功");
+        let formdata=new FormData();
+        let config = {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+        formdata.append("username",state.myInfo.username);
+        formdata.append("id",data.id);
+        state.athis.$axios.post('http://localhost:8080/mark',formdata,config).then(res =>{
+          let msg=res.data;
+          if(msg==true){
+            Element.Message.success("收藏成功");
+            let formdata=new FormData();
+            let config = {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            }
+            formdata.append("username",state.myInfo.username);
+            state.athis.$axios.post('http://localhost:8080/getmarked',formdata,config).then(res =>{
+              let msg=res.data;
+              state.myHouseList.marked=msg;
+            })
+          }
+
+
+        })
       }
       else
         Element.Message.error("请勿重复收藏");

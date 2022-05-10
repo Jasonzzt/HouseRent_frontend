@@ -66,7 +66,7 @@
 
 <script>
 import store from "@/store";
-
+import Element from "element-ui";
 export default {
   name: "HouseRelease",
 
@@ -97,7 +97,14 @@ export default {
       let { uploadFiles } = this.$refs.upload
       let form = new FormData()
       form.append("neighborhood",this.houseForm.neighborhood);
-      form.append("")
+      form.append("district",this.houseForm.district);
+      form.append("type",this.houseForm.type);
+      form.append("layer",this.houseForm.layer);
+      form.append("information",this.houseForm.information);
+      form.append("joint",this.houseForm.joint);
+      form.append("area",this.houseForm.area);
+      form.append("host",this.houseForm.host);
+      form.append("cost",this.houseForm.cost);
       let status = true
       // 在这里对每一张图片进行大小的校验，如果不符合则提示，所有不符合的都提示，校验完成后只要有不符合条件的就不执行下面的操作
       uploadFiles.forEach(item => {
@@ -117,7 +124,22 @@ export default {
           'Content-Type': 'multipart/form-data'
         }
       }
-      this.$axios.post("http://localhost:8080/uploadimage",form, config)
+      this.$axios.post("http://localhost:8080/uploadimage",form, config).then(res=>{
+        let msg=res.data;
+        if(msg==true) {
+          Element.Message.success("上传成功");
+          let config = {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+          this.$axios.post('http://localhost:8080/gethouse', new FormData(), config).then(res => {
+            let msg = res.data.msg;
+            //alert(JSON.stringify(msg[0]));
+            store.commit("setHouseData", {houseList: msg});
+          })
+        }
+      })
       // 符合条件后再将这个FormData对象传递给后端
       //调取接口上传form参数
     },
@@ -128,18 +150,7 @@ export default {
       console.log(file);
     },
     onSuccess(res){
-      if(res=="true")
-        Element.Message.success("上传成功");
-      let config = {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      }
-      this.$axios.post('http://localhost:8080/gethouse', new FormData,config).then(res => {
-        let msg = res.data.msg;
-        //alert(JSON.stringify(msg[0]));
-        store.commit("setHouseData", {houseList: msg});
-      })
+
     }
   }
 
