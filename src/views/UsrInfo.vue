@@ -64,6 +64,16 @@ export default {
     };
   },
   methods:{
+    sleep(time) {
+      var timeStamp = new Date().getTime();
+      var endTime = timeStamp + time;
+      while (true) {
+        if (new Date().getTime() > endTime) {
+          return;
+        }
+      }
+    },
+
     change(){
       this.isShow=true;
       this.newName=this.mydata.name;
@@ -75,8 +85,14 @@ export default {
           'Content-Type': 'multipart/form-data'
         }
       }
-      this.$axios.post('http://localhost:8080/exit',formdate,config);
-      router.push('/');
+      this.$axios.post('http://localhost:8080/exit',formdate,config).then(res=>{
+        let msg=res.data;
+        if(msg=='success'){
+          Element.Message.success("退出成功");
+          router.push('/');
+        }
+      })
+
     },
     commit(){
       if(this.newName!='') {
