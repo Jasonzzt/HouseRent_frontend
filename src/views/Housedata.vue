@@ -61,6 +61,7 @@
           </el-option>
         </el-select>
      </div>
+<!--      <el-button @click="cancelForm">取 消</el-button>-->
       <el-button style="position:absolute;bottom:50px;z-index: 10" type="primary" @click="$refs.drawer.closeDrawer()" >确定</el-button>
     </el-drawer>
 
@@ -113,7 +114,35 @@ export default {
       }, {
         value1: '秦淮区',
         label: '秦淮区'
-      }],
+      },{
+        value1:'雨花台区',
+        label:'雨花台区'
+      },
+        {
+          value1:'玄武区',
+          label: '玄武区'
+        },
+        {
+          value1:'建邺区',
+          label: '建邺区'
+        },
+        {
+           value1: '六合区',
+          label: '六合区'
+
+        },
+        {
+          value1: '高淳区',
+          label: '高淳区'
+        },
+        {
+          value1: '江北新区',
+          label: '江北新区'
+        },
+        {
+          value1: '溧水区',
+          label: '溧水区'
+        }],
 
       typeOptions: [{
         value2: '不限',
@@ -190,6 +219,9 @@ export default {
       store.commit("selectHouse",{district:this.value1,type:this.value2,cost:this.value3});
       this.$data.housedata=this.$store.state.chosenList;
     },
+    cancelForm(){
+      this.drawer = false;
+    }
 
     },
   computed:{

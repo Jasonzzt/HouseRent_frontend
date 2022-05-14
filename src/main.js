@@ -12,6 +12,7 @@ Vue.use(elementUI);
 import axios from "axios";
 /*全局绑定axios*/
 Vue.prototype.$axios = axios;
+
 /*导入qs*/
 import qs from 'qs';
 /*全局绑定*/
@@ -23,6 +24,9 @@ require('./mock/RegisterService.js')
 //import Store from './store/index';
 import Vuex from 'vuex'
 Vue.use(Vuex)
+import VueCookies from 'vue-cookies'
+Vue.use(VueCookies)
+
 Vue.config.productionTip = false
 
 new Vue({

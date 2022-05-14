@@ -15,6 +15,7 @@
         <el-option label="溧水区" value="溧水区"></el-option>
         <el-option label="江北新区" value="江北新区"></el-option>
         <el-option label="栖霞区" value="栖霞区"></el-option>
+        <el-option label="秦淮区" value="秦淮区"></el-option>
       </el-select>
     </el-form-item>
     <el-form-item label="房产户型" style="font-weight: bold">

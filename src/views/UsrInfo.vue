@@ -1,7 +1,7 @@
 <template>
 <!--  /*应该设置一个isshow开始只显示我的信息，如果点击修改再变成文本输入框*/-->
   <div >
-    <el-button  style="position: absolute;right: 30px;top:70px" type="primary" @click="change">修改</el-button>
+    <el-button  style="position: absolute;right: 30px;top:70px" type="primary" @click="change">修改昵称</el-button>
     <el-button  v-show="isShow" style="position: absolute;right: 120px;top:70px" type="primary" @click="commit">提交</el-button>
 
     <div style="margin-bottom:0px;margin-left: 20px;width: 100px; height: 100px;display: inline">
@@ -10,7 +10,7 @@
       ></el-image>
     </div>
 
-    <div >
+<!--    <div >
       <el-upload
           class="upload-demo"
           action="https://jsonplaceholder.typicode.com/posts/"
@@ -23,7 +23,7 @@
       >
         <el-button v-show="isShow" style="position:absolute;right:675px;bottom: 100px" size="small" type="primary">点击上传本地图片</el-button>
       </el-upload>
-    </div>
+    </div>-->
 
 
       <div style="position:absolute;margin-left: 700px;top: 200px">
@@ -39,41 +39,28 @@
         style="position: absolute;top: 305px;left:770px;width:200px"
         type="text"
         v-model="newName"
-        maxlength="10"
+        maxlength="8"
         show-word-limit
         v-show="isShow"
     ></el-input>
+    <el-button  style="position: absolute;right: 30px;top:150px" type="success" @click="exit">退出登录</el-button>
 
-
-
-<!--    <div style="position:absolute;margin-left: 0px;top: 420px" >
-      <span style="font-size:20px">密码</span>
-      <span style="font-size:20px;color:#41b9a6;margin-left: 40px">{{ mydata.key }}</span>
-    </div>
-    <input
-        style="position: absolute;top: 600px;left: 120px"
-        placeholder="输入新的密码"
-        v-show="isShow"
-        v-model="newKey">
-    </input>-->
-
-    <div> </div>
   </div>
+
 
 </template>
 
 <script>
 import store from "../store/index";
+import Element from "element-ui";
+import router from "@/router";
 export default {
   name: "UsrInfo",
   data(){
     return{
       isShow:false,
       newName:'',
-      form:{
-        name:'',
-      },
-      fileList: [],
+
     };
   },
   methods:{
@@ -81,23 +68,40 @@ export default {
       this.isShow=true;
       this.newName=this.mydata.name;
       },
+    exit(){
+      let formdate=new FormData();
+      let config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+      this.$axios.post('http://localhost:8080/exit',formdate,config);
+      router.push('/');
+    },
     commit(){
-      this.isShow=false;
-      store.commit("refreshMyData",{newName:this.newName});
+      if(this.newName!='') {
+        let formdata = new FormData();
+        formdata.append("name", this.newName);
+        formdata.append("username", this.$store.state.myInfo.username);
+        let config = {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+        this.$axios.post('http://localhost:8080/updatename', formdata, config).then(res => {
+          let msg = res.data;
+          if (msg == true) {
+            Element.Message.success("修改成功");
+            this.isShow = false;
+            store.commit("refreshMyData", {newName: this.newName});
+          }
+        })
+      }
+      else{
+        Element.Message.error("请输入至少一个字符");
+      }
     },
 
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
-    },
-    handlePreview(file) {
-      console.log(file);
-    },
-    handleExceed(files, fileList) {
-      this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
-    },
-    beforeRemove(file, fileList) {
-      return this.$confirm(`确定移除 ${ file.name }？`);
-    }
   },
   computed:{
     mydata() {

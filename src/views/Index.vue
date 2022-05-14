@@ -35,7 +35,8 @@
 <script>
 import NaviMenu from "../components/NaviMenu.vue";
 import store from "@/store";
-
+import Element from "element-ui";
+import router from "@/router";
 export default {
   name: "index",
   components: {
@@ -46,7 +47,39 @@ export default {
       dialogVisible: false
     };
   },
+  methods:{
+    getData(username){
+      let formdata=new FormData();
+      formdata.append("username",username);
+      let config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+      this.$axios.post('http://localhost:8080/getuser', formdata,config).then(res =>{
+        //alert("发回来了");
+
+        let msg=res.data.msg;
+        //alert(msg);
+        let username=msg.username;
+        let img=msg.img;
+        let name=msg.name;
+        let userlist=msg.userlist;
+        let chatmessagelist=msg.chatmessagelist;
+        //alert(userlist[0].username);
+        store.commit("setData", {userName:username,img:img,name:name,userList:userlist,chatMessageList:chatmessagelist,that:this});
+        store.commit("setWS",{});
+      })
+
+    }
+  },
   mounted() {
+    const CheckId = this.$cookies.get("username");
+
+    if(!CheckId){
+      Element.Message.error("未登录");
+      router.push('/')
+    }
     let formdata=new FormData();
     let config = {
       headers: {
@@ -56,8 +89,9 @@ export default {
     this.$axios.post('http://localhost:8080/gethouse', formdata,config).then(res => {
       let msg = res.data.msg;
       //alert(JSON.stringify(msg[0]));
-      store.commit("setHouseData", {houseList: msg});
+      store.commit("setHouseData", {houseList: msg,that:this});
     })
+    this.getData(CheckId);
   }
 };
 </script>

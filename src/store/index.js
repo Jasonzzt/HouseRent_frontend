@@ -8,7 +8,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     /* 记录登录状态 */
-    isLogin: false,
+
     /*WebSocket*/
     ws: '', athis: this,
     /* 我的信息 */
@@ -269,11 +269,11 @@ export default new Vuex.Store({
       state.myInfo.img = data.img;
       state.userList = data.userList;
       state.chatMessageList = data.chatMessageList;
-      state.isLogin = true;
-      state.athis=data.that
+      state.athis=data.that;
     },
     setHouseData(state,data){
       state.houseList=data.houseList;
+      state.athis=data.that;
       let formdata=new FormData();
       let config = {
         headers: {

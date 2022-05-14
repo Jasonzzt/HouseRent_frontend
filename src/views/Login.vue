@@ -107,7 +107,7 @@ export default {
               Element.Message.success("登陆成功");
 
               /*获取用户信息*/
-              this.getData();
+              //this.getData();
 
               /*跳转页面*/
               router.push('/index')
@@ -174,9 +174,16 @@ export default {
 
     }
   },
-  created() {
+  mounted() {
     // 页面渲染完成后执行获取验证码方法
-    this.getVerifyCodeImg();
+    const CheckId = this.$cookies.get("username");
+    if(!CheckId){
+      this.getVerifyCodeImg();
+    }
+    else{
+      router.push('/index');
+    }
+
   }
 }
 </script>
