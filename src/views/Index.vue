@@ -76,10 +76,10 @@ export default {
   mounted() {
     const CheckId = this.$cookies.get("username");
 
-    if(!CheckId){
-      Element.Message.error("未登录");
-      router.push('/')
-    }
+    // if(!CheckId){
+    //   Element.Message.error("未登录");
+    //   router.push('/')
+    // }
     let formdata=new FormData();
     let config = {
       headers: {

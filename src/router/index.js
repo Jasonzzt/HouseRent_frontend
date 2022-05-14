@@ -10,6 +10,7 @@ import HouseInfo from "@/views/HouseInfo";
 import HouseRelease from "@/views/HouseRelease";
 import GoingOrder from "@/views/GoingOrder";
 import MarkedOrder from "@/views/MarkedOrder";
+import staff from "@/views/staff";
 Vue.use(VueRouter)
 
 const routes = [
@@ -24,6 +25,11 @@ const routes = [
     path:'/register',
     name:'register',
     component: Register
+  },
+  {
+    path:'/staff',
+    name: "staff",
+    component: staff
   },
   {
     path: '/index',
@@ -65,6 +71,7 @@ const routes = [
         name: "MarkedOrder",
         component: MarkedOrder
       }
+
 
     ]
   },

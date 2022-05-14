@@ -111,7 +111,8 @@ export default {
 
               /*跳转页面*/
               router.push('/index')
-            } else if(codeconfirm==='false'){
+            }
+            else if(codeconfirm==='false'){
               /*打印错误信息*/
               Element.Message.error("验证码错误");
             }else{

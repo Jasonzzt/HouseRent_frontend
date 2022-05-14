@@ -110,7 +110,17 @@ export default new Vuex.Store({
         host:'111'
       }
     ],
-    chosenList:[]
+    chosenList:[],
+    questions:[
+      {
+        id:"123456",
+        q:"用户12345拿钱跑路了！",
+      },
+      {
+        id:"00000",
+        q:"用户111的图片与实际严重不符！",
+      }
+    ],
   },
   mutations: {
     setUserInfo(state, data) {
@@ -285,6 +295,19 @@ export default new Vuex.Store({
         let msg=res.data;
         state.myHouseList.marked=msg;
       })
+    },
+    addQuestion(state,data){
+      //alert("添加问题");
+      state.questions.push(data.id,data.q);
+    },
+    //删去问题
+    delQuestion(state,data){
+      alert("删除信息,对应id为"+data.id);
+      let i;
+      for(i=0;i<state.questions.length;i++){
+        if(data.id==state.questions[i].id&&data.q==state.questions[i].q)
+          delete state.questions[i];//会变为undefined
+      }
     },
     setWS(state, data,that) {
 

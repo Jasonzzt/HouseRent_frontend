@@ -74,6 +74,8 @@ export default {
         }
         else if(problem!=""){
           let r=confirm("请确认你的问题："+problem);
+         // alert("aaaa");
+          store.commit("addQuestion",{id:this.myInfo.username,q:problem});
         }
         else{
           alert("请输入内容");
