@@ -297,6 +297,7 @@ export default new Vuex.Store({
         state.userInfo.img=msg.img;
         state.userInfo.name=msg.name;
         state.userInfo.username=msg.username;
+        state.userList.append(state.userInfo);
       })
 
 
@@ -344,10 +345,10 @@ export default new Vuex.Store({
         state.myHouseList.marked=msg;
       })
     },
-    addQuestion(state,data){
+/*    addQuestion(state,data){
       //alert("添加问题");
       state.questions.push(data.id,data.q);
-    },
+    },*/
     //删去问题
     delQuestion(state,data){
       alert("删除信息,对应id为"+data.id);

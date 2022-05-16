@@ -190,9 +190,9 @@ export default {
       direction: 'ttb',
       housedata:this.$store.state.houseList,
       top:[
-        require('@/assets/2.jpg'),
+        require('@/assets/1.jpg'),
             require('@/assets/1.jpg'),
-        require('@/assets/2.jpg'),
+        require('@/assets/1.jpg'),
         require('@/assets/1.jpg'),
       ]
     };

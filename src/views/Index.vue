@@ -77,10 +77,10 @@ export default {
   beforeUpdate() {
     const CheckId = this.$cookies.get("username");
 
- /*   if(!CheckId){
+    if(!CheckId){
       Element.Message.error("未登录");
       router.push('/')
-    }*/
+    }
     this.load=true;
     let formdata=new FormData();
     let config = {
@@ -100,10 +100,10 @@ export default {
 
     const CheckId = this.$cookies.get("username");
 
-/*    if(!CheckId){
+    if(!CheckId){
       Element.Message.error("未登录");
       router.push('/')
-    }*/
+    }
     this.load=true;
     let formdata=new FormData();
     let config = {
