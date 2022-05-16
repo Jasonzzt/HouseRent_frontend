@@ -1,9 +1,9 @@
 <template>
-  <div class="div1">
+  <div class="div1" style="height: 480px ;overflow-y:scroll"  id="flow" >
     <!-- 先循环找到你想要聊天的那个人 -->
-    <div v-for="(list, index) in msgList" :key="index">
+    <div v-for="(list, index) in msgList" :key="index" >
       <!-- 有聊天记录：循环聊天记录 -->
-      <div v-if="list.username==userInfo.username">
+      <div v-if="list.username==userInfo.username" >
         <!-- 再循环显示聊天记录 -->
         <div  v-for="(msg, index) in list.list" :key="index">
           <p :class="{'left':msg.type=='user'}" v-if="msg.type=='user'">
@@ -21,13 +21,25 @@
 </template>
 
 <script>
+
 import store from "../store/index";
 export default {
   data() {
     return {
+      oldScrollTop:0,
+      scrollFlag:true,
+      Intervall:null,
 
     };
   },
+
+  methods:{
+
+
+  },
+  mounted() {
+  },
+
   computed:{
     myInfo(){
       return store.state.myInfo;
@@ -40,6 +52,7 @@ export default {
     }
   },
 };
+
 </script>
 
 <style scoped>

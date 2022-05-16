@@ -37,10 +37,20 @@ export default {
   },
 
   methods:{
+    sleep(time) {
+      var timeStamp = new Date().getTime();
+      var endTime = timeStamp + time;
+      while (true) {
+        if (new Date().getTime() > endTime) {
+          return;
+        }
+      }
+    },
     setUserInfo(row, column, event){
       //alert(row.name);
       //console.log(row);
       store.commit('setUserInfo',{username:row.username,name:row.name,img:row.img});
+
     }
   },
 

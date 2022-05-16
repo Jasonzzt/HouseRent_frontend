@@ -61,6 +61,54 @@ export default new Vuex.Store({
           {
             type: "user",
             msg: "你要租房吗？",
+          },{
+            type: "user",
+            msg: "你要租房吗？",
+          },{
+            type: "user",
+            msg: "你要租房吗？",
+          },{
+            type: "user",
+            msg: "你要租房吗？",
+          },{
+            type: "user",
+            msg: "你要租房吗？",
+          },{
+            type: "user",
+            msg: "你要租房吗？",
+          },{
+            type: "user",
+            msg: "你要租房吗？",
+          },{
+            type: "user",
+            msg: "你要租房吗？",
+          },{
+            type: "user",
+            msg: "你要租房吗？",
+          },{
+            type: "user",
+            msg: "你要租房吗？",
+          },{
+            type: "user",
+            msg: "你要租房吗？",
+          },{
+            type: "user",
+            msg: "你要租房吗？",
+          },{
+            type: "user",
+            msg: "你要租房吗？",
+          },{
+            type: "user",
+            msg: "你要租房吗？",
+          },{
+            type: "user",
+            msg: "你要租房吗？",
+          },{
+            type: "user",
+            msg: "你要租房吗？",
+          },{
+            type: "user",
+            msg: "你要租房吗？",
           },
         ],
       },
@@ -90,7 +138,7 @@ export default new Vuex.Store({
         district:'江宁区',
         type:'两室',
         area:'100㎡',
-        cost:'2000',
+        cost:'200000',
         layer:'2层',
         joint:'true',
         information:'不错',
@@ -103,10 +151,10 @@ export default new Vuex.Store({
         district:'建邺区',
         type:'三室',
         area:'150㎡',
-        cost:'3000',
+        cost:'300000',
         layer:'13层',
         joint:'false',
-        information:'还行',
+        information:'还行wefuiwejhukfjewfhilkewjfol;wfhilkjol;aweejfilewopfjwelfjikwepojfn weiofjhiowefikjlhewfjklqwefjolkwefjiklwefjikwerhnkjgfwehjkfwehuikfgerfgnklwef;olqfiklweg',
         host:'111'
       }
     ],
@@ -244,7 +292,7 @@ export default new Vuex.Store({
           'Content-Type': 'multipart/form-data'
         }
       }
-      state.athis.$axios.post('http://localhost:8080/getuser', formdata,config).then(res =>{
+      state.athis.$axios.post('http://106.12.172.208/getuser', formdata,config).then(res =>{
         let msg=res.data.msg;
         state.userInfo.img=msg.img;
         state.userInfo.name=msg.name;
@@ -291,7 +339,7 @@ export default new Vuex.Store({
         }
       }
       formdata.append("username",state.myInfo.username);
-      state.athis.$axios.post('http://localhost:8080/getmarked',formdata,config).then(res =>{
+      state.athis.$axios.post('http://106.12.172.208/getmarked',formdata,config).then(res =>{
         let msg=res.data;
         state.myHouseList.marked=msg;
       })
@@ -311,7 +359,7 @@ export default new Vuex.Store({
     },
     setWS(state, data,that) {
 
-      state.ws = new WebSocket("ws://localhost:8080/ws");
+      state.ws = new WebSocket("ws://106.12.172.208/ws");
 
       if (state.ws.readyState == state.ws.CONNECTING) console.log("ws 连接成功");
       state.ws.onopen = function () {
@@ -326,7 +374,7 @@ export default new Vuex.Store({
             'Content-Type': 'multipart/form-data'
           }
         }
-        state.athis.$axios.post("http://localhost:8080/getuser", formdata, config).then(res => {
+        state.athis.$axios.post("http://106.12.172.208/getuser", formdata, config).then(res => {
           let msg = res.data.msg;
           state.userList = msg.userlist;
           state.chatMessageList = msg.chatmessagelist;
@@ -350,7 +398,7 @@ export default new Vuex.Store({
         }
         formdata.append("username",state.myInfo.username);
         formdata.append("id",data.id);
-        state.athis.$axios.post('http://localhost:8080/mark',formdata,config).then(res =>{
+        state.athis.$axios.post('http://106.12.172.208/mark',formdata,config).then(res =>{
           let msg=res.data;
           if(msg==true){
             Element.Message.success("收藏成功");
@@ -361,7 +409,7 @@ export default new Vuex.Store({
               }
             }
             formdata.append("username",state.myInfo.username);
-            state.athis.$axios.post('http://localhost:8080/getmarked',formdata,config).then(res =>{
+            state.athis.$axios.post('http://106.12.172.208/getmarked',formdata,config).then(res =>{
               let msg=res.data;
               state.myHouseList.marked=msg;
             })

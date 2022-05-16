@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" v-loading="load">
     <el-container>
       <el-header>
         <NaviMenu></NaviMenu>
@@ -44,7 +44,8 @@ export default {
   },
   data(){
     return {
-      dialogVisible: false
+      dialogVisible: false,
+      load:false
     };
   },
   methods:{
@@ -56,7 +57,7 @@ export default {
           'Content-Type': 'multipart/form-data'
         }
       }
-      this.$axios.post('http://localhost:8080/getuser', formdata,config).then(res =>{
+      this.$axios.post('http://106.12.172.208/getuser', formdata,config).then(res =>{
         //alert("发回来了");
 
         let msg=res.data.msg;
@@ -73,25 +74,50 @@ export default {
 
     }
   },
-  mounted() {
+  beforeUpdate() {
     const CheckId = this.$cookies.get("username");
 
-    // if(!CheckId){
-    //   Element.Message.error("未登录");
-    //   router.push('/')
-    // }
+ /*   if(!CheckId){
+      Element.Message.error("未登录");
+      router.push('/')
+    }*/
+    this.load=true;
     let formdata=new FormData();
     let config = {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
     }
-    this.$axios.post('http://localhost:8080/gethouse', formdata,config).then(res => {
+    this.$axios.post('http://106.12.172.208/gethouse', formdata,config).then(res => {
       let msg = res.data.msg;
       //alert(JSON.stringify(msg[0]));
       store.commit("setHouseData", {houseList: msg,that:this});
     })
     this.getData(CheckId);
+    this.load=false;
+  },
+  mounted() {
+
+    const CheckId = this.$cookies.get("username");
+
+/*    if(!CheckId){
+      Element.Message.error("未登录");
+      router.push('/')
+    }*/
+    this.load=true;
+    let formdata=new FormData();
+    let config = {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }
+    this.$axios.post('http://106.12.172.208/gethouse', formdata,config).then(res => {
+      let msg = res.data.msg;
+      //alert(JSON.stringify(msg[0]));
+      store.commit("setHouseData", {houseList: msg,that:this});
+    })
+    this.getData(CheckId);
+    this.load=false;
   }
 };
 </script>

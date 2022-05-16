@@ -3,8 +3,8 @@
    <!--    走马灯-->
     <div class="block">
         <el-carousel :interval="2000" type="card" height="400px" indicator-position="none">
-          <el-carousel-item v-for="item in 4" :key="item">
-            <h3>{{ item }}</h3>
+          <el-carousel-item v-for="item in top" :key="item">
+            <img :src="item" style="height: 400px;width:740px;"></img>
           </el-carousel-item>
         </el-carousel>
     </div>
@@ -76,8 +76,8 @@
             <span v-if="scope.row.joint=='false'" class="span1" style="text-align: center; position:absolute; margin-top: 120px;margin-left: 350px;font-size: 20px " >独租</span>
             <span class="span1" style="text-align: center; position:absolute; margin-top: 200px;margin-left: 120px;font-size: 20px "  >{{scope.row.district}}</span>
             <span class="span1" style="text-align: center; position:absolute; margin-top: 200px;margin-left: 350px;font-size: 20px "  >{{scope.row.neighborhood}}</span>
-            <span class="span1" style="text-align: center; position:absolute; margin-top: 150px;margin-left: 600px;font-size: 45px;color: #e5121f;font-weight: bold;"  >{{scope.row.cost}}</span>
-            <span class="span1" style="text-align: center; position:absolute; margin-top: 154px;margin-left: 711px;font-size: 25px;color: #e5121f;font-weight: bold; "  >元/月</span>
+            <span class="span1" style="text-align: center; position:absolute; margin-top: 150px;margin-left: 600px;font-size: 45px;color: #e5121f;font-weight: bold;"  >{{scope.row.cost}}<span style="font-size: 25px;color: #e5121f;font-weight: bold;">元/月</span></span>
+<!--            <span class="span1" style="text-align: center; position:absolute; margin-top: 154px;margin-left: 711px;font-size: 25px;color: #e5121f;font-weight: bold; "  >元/月</span>-->
           </div>
         </template>
 
@@ -188,8 +188,13 @@ export default {
       drawer: false,
 
       direction: 'ttb',
-      housedata:this.$store.state.houseList
-
+      housedata:this.$store.state.houseList,
+      top:[
+        require('@/assets/2.jpg'),
+            require('@/assets/1.jpg'),
+        require('@/assets/2.jpg'),
+        require('@/assets/1.jpg'),
+      ]
     };
   },
   methods: {

@@ -1,5 +1,5 @@
 <template>
-  <el-input placeholder="请输入内容" v-model="input" @keyup.enter.native="send"> </el-input>
+  <el-input placeholder="请输入内容" v-model="input" aria-placeholder="placeholder" @keyup.enter.native="send" > </el-input>
 </template>
 
 <script>
@@ -11,19 +11,27 @@ export default {
       input:'',
       myName:'',
       userName:'',
+      placeholder:""
     }
   },
   methods: {
     send(){
+      if(this.input==''){
+        this.placeholder="请输入内容！"
 
-      /* 发送消息 */
-      store.commit('addMessage', {type:"my",msg:this.input});
-      let a={"my":store.state.myInfo.username,"user":store.state.userInfo.username,"msg":this.input}
-      //alert(a)
-      //alert(JSON.stringify(a))
-      store.state.ws.send(JSON.stringify(a));
-      /* 清空输入框 */
-      this.input='';
+      }
+      else{
+        this.placeholder=""
+        /* 发送消息 */
+        store.commit('addMessage', {type:"my",msg:this.input});
+        let a={"my":store.state.myInfo.username,"user":store.state.userInfo.username,"msg":this.input}
+        //alert(a)
+        //alert(JSON.stringify(a))
+        store.state.ws.send(JSON.stringify(a));
+        /* 清空输入框 */
+        this.input='';
+      }
+
     },
   },
   computed:{

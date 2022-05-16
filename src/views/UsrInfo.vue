@@ -39,7 +39,7 @@
         style="position: absolute;top: 305px;left:770px;width:200px"
         type="text"
         v-model="newName"
-        maxlength="8"
+        maxlength="15"
         show-word-limit
         v-show="isShow"
     ></el-input>
@@ -85,7 +85,7 @@ export default {
           'Content-Type': 'multipart/form-data'
         }
       }
-      this.$axios.post('http://localhost:8080/exit',formdate,config).then(res=>{
+      this.$axios.post('http://106.12.172.208/exit',formdate,config).then(res=>{
         let msg=res.data;
         if(msg=='success'){
           Element.Message.success("退出成功");
@@ -104,7 +104,7 @@ export default {
             'Content-Type': 'multipart/form-data'
           }
         }
-        this.$axios.post('http://localhost:8080/updatename', formdata, config).then(res => {
+        this.$axios.post('http://106.12.172.208/updatename', formdata, config).then(res => {
           let msg = res.data;
           if (msg == true) {
             Element.Message.success("修改成功");

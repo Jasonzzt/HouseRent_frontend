@@ -93,7 +93,7 @@ export default {
           'Content-Type': 'multipart/form-data'
         }
       }
-      this.$axios.post('http://localhost:8080/emailconfirm', formdata,config).then(res => {
+      this.$axios.post('http://106.12.172.208/emailconfirm', formdata,config).then(res => {
         // 拿到结果
         //let message = JSON.parse(res.data.msg);
 
@@ -124,7 +124,7 @@ export default {
             }
           }
           // 表单验证成功
-          this.$axios.post('http://localhost:8080/register', formdata,config).then(res => {
+          this.$axios.post('http://106.12.172.208/register', formdata,config).then(res => {
             // 拿到结果
             //let result = JSON.parse(res.data.data);
             let message = res.data.msg;
@@ -164,7 +164,7 @@ export default {
           'Content-Type': 'multipart/form-data'
         }
       }
-      this.$axios.post('http://localhost:8080/getuser', formdata,config).then(res =>{
+      this.$axios.post('http://106.12.172.208/getuser', formdata,config).then(res =>{
 
         let msg=res.data.msg;
         //alert(msg);
@@ -177,7 +177,7 @@ export default {
         store.commit("setData", {userName:username,img:img,name:name,userList:userlist,chatMessageList:chatmessagelist});
         store.commit("setWS",{});
       })
-      this.$axios.post('http://localhost:8080/gethouse', formdata,config).then(res =>{
+      this.$axios.post('http://106.12.172.208/gethouse', formdata,config).then(res =>{
         let msg=res.data.msg;
         store.commit("setHouseData",{houseList:msg});
       })

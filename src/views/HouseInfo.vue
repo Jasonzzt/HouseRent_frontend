@@ -24,16 +24,34 @@
             <span class="span1" style="text-align: center; position:absolute; margin-top: 100px;margin-left: 350px;font-size: 20px "  >{{list.neighborhood}}</span>
             <span class="span1" style="text-align: center; position:absolute; margin-top: 180px;margin-left: 120px;font-size: 20px "  >{{list.area}}</span>
             <span class="span1" style="text-align: center; position:absolute; margin-top: 180px;margin-left: 350px;font-size: 20px "  >{{list.layer}}</span>
-            <span class="span1" style="text-align: center; position:absolute; margin-top: 100px;margin-left: 600px;font-size: 45px;color: #e5121f;font-weight: bold;"  >{{list.cost}}</span>
-            <span class="span1" style="text-align: center; position:absolute; margin-top: 104px;margin-left: 711px;font-size: 25px;color: #e5121f;font-weight: bold; "  >元/月</span>
+            <span class="span1" style="text-align: center; position:absolute; margin-top: 100px;margin-left: 600px;font-size: 45px;color: #e5121f;font-weight: bold;"  >{{list.cost}}<span style="font-size: 25px;color: #e5121f;font-weight: bold; ">元/月</span></span>
           </div>
-          <el-button @click="mark1(list)" style="position:absolute;bottom:200px;right: 200px" type="primary" >收藏房源</el-button>
-
-            <el-button  @click="del(list)" style="position:absolute;bottom:200px;right: 50px" type="primary" >{{ houseInfo.host==myInfo.username?"删除房源":"联系房主" }}</el-button>
-          <span style="position: absolute;margin-left: -600px;margin-top: -250px;font-family: SimSun;font-weight: bold;font-size: 30px;color: #41b9a6">房屋详情:{{list.information}}</span>
-
+          <el-collapse v-model="activeNames" @change="handleChange" style="margin-top:-142px;">
+            <el-collapse-item  name="col" >
+              <template slot="title">
+                <p @click="function(){this.col=1}" class="title">详细信息</p>
+              </template>
+              <div style="font-size: 25px;text-align: left">{{list.information}}</div>
+            </el-collapse-item>
+          </el-collapse>
+          <div style="margin-top:-100px">
+          <el-button @click="mark1(list)" style="position:relative;" type="primary" >收藏房源</el-button>
+            <el-button  @click="del(list)" style="position:relative;" type="primary" >{{ houseInfo.host==myInfo.username?"删除房源":"联系房主" }}</el-button>
+          </div>
+<!--          ><el-card class="box-card">
+            <div slot="header" class="clearfix">
+              <span>房屋详情</span>
+            </div>
+            <div   class="text item">
+              {{list.information}}
+            </div>
+          </el-card>-->
         </div>
-      </div>
+        </div>
+<!--
+        <span style="position: relative;margin-left: -600px;margin-top: -250px;font-family: SimSun;font-weight: bold;font-size: 30px">房屋详情:{{list.information}}</span>
+-->
+
 <!--<el-button @click="connect()" style="position:absolute;bottom:200px;right: 50px" type="primary" >联系房主</el-button>-->
 </body>
 
@@ -49,11 +67,16 @@ export default {
 
   data(){
     return{
-      flag:false
+      activeNames: ['1'],
+      flag:false,
+      col:2
     }
   },
 
   methods:{
+    handleChange(val) {
+      console.log(val);
+    },
     del(list){
       //在全局变量userlist里面加入这个人（根据id判断是否已存在）
       //把全局变量的userinfo改成这个人
@@ -67,7 +90,7 @@ export default {
             }
           }
           formdata.append("id",this.houseInfo.id);
-          this.$axios.post('http://localhost:8080/deletehouse',formdata,config).then(res => {
+          this.$axios.post('http://106.12.172.208/deletehouse',formdata,config).then(res => {
             let msg=res.data;
             if(msg==true){
               Element.Message.success("删除成功");
@@ -77,7 +100,7 @@ export default {
                   'Content-Type': 'multipart/form-data'
                 }
               }
-              this.$axios.post('http://localhost:8080/gethouse', formdata,config).then(res => {
+              this.$axios.post('http://106.12.172.208/gethouse', formdata,config).then(res => {
                 let msg = res.data.msg;
                 //alert(JSON.stringify(msg[0]));
                 store.commit("setHouseData", {houseList: msg});
@@ -130,6 +153,12 @@ export default {
 </script>
 
 <style scoped>
+.title{
+  font-size: 35px;
+  font-weight: bold;
+  color: #c772b5;
+  margin-left: 50px;
+}
 .el-carousel__item h3 {
   color: #475669;
   font-size: 14px;

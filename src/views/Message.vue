@@ -37,7 +37,7 @@ export default {
           'Content-Type': 'multipart/form-data'
         }
       }
-      this.$axios.post('http://localhost:8080/getuser', formdata,config).then(res =>{
+      this.$axios.post('http://106.12.172.208/getuser', formdata,config).then(res =>{
         //alert("发回来了");
 
         let msg=res.data.msg;

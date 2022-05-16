@@ -96,7 +96,7 @@ export default {
             }
           }
           // 表单验证成功
-          this.$axios.post('http://localhost:8080/login', formdata,config).then(res => {
+          this.$axios.post('http://106.12.172.208/login', formdata,config).then(res => {
             // 拿到结果
             //let result = JSON.parse(res.data.data);
             let message = res.data.msg;
@@ -107,10 +107,10 @@ export default {
               Element.Message.success("登陆成功");
 
               /*获取用户信息*/
-              //this.getData();
+              this.getData();
 
               /*跳转页面*/
-              router.push('/index')
+              router.push("/index")
             }
             else if(codeconfirm==='false'){
               /*打印错误信息*/
@@ -143,7 +143,7 @@ export default {
           'Content-Type': 'multipart/form-data'
         }
       }
-      this.$axios.post('http://localhost:8080/getverifycode',formdata,config).then(res => {
+      this.$axios.post('http://106.12.172.208/getverifycode',formdata,config).then(res => {
         // 获取验证码key
         //this.loginForm.codeToken = res.data.codeToken;
         // 获取验证码图片
@@ -158,7 +158,7 @@ export default {
           'Content-Type': 'multipart/form-data'
         }
       }
-      this.$axios.post('http://localhost:8080/getuser', formdata,config).then(res =>{
+      this.$axios.post('http://106.12.172.208/getuser', formdata,config).then(res =>{
         //alert("发回来了");
 
         let msg=res.data.msg;
@@ -169,8 +169,15 @@ export default {
         let userlist=msg.userlist;
         let chatmessagelist=msg.chatmessagelist;
         //alert(userlist[0].username);
+
         store.commit("setData", {userName:username,img:img,name:name,userList:userlist,chatMessageList:chatmessagelist,that:this});
         store.commit("setWS",{});
+      })
+       formdata=new FormData();
+      this.$axios.post('http://106.12.172.208/gethouse', formdata,config).then(res => {
+        let msg = res.data.msg;
+        //alert(JSON.stringify(msg[0]));
+        store.commit("setHouseData", {houseList: msg,that:this});
       })
 
     }
