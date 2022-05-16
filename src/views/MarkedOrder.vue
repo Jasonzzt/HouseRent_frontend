@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h1>收藏租房</h1>
+    <hr class="hr-solid-content" data-content="收藏房源">
+
     <el-table :data="markhouse"  stripe style="width: 100%; cursor: pointer;border-radius: 25px; " :show-header='false' >
       <el-table-column  label="房子" >
         <template slot-scope="scope" >
@@ -57,5 +58,26 @@ export default {
 </script>
 
 <style scoped>
+
+.hr-solid-content{
+  color: #3f8ec8;
+  border: 0;
+  font-size: 20px;
+  padding: 1em 0;
+  position: relative;
+}
+.hr-solid-content::before {
+  content: attr(data-content);
+  position: absolute;
+  padding: 0 1ch;
+  line-height: 1px;
+  border: solid #2929b8;
+  border-width: 0 99vw;
+  width: fit-content;
+  /* for IE浏览器 */
+  white-space: nowrap;
+  left: 50%;
+  transform: translateX(-50%);
+}
 
 </style>

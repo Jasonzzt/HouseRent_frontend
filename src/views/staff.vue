@@ -10,6 +10,7 @@
         active-text-color="#ffd04b">
       <el-menu-item index="1">现有房源</el-menu-item>
       <el-menu-item index="2">用户投诉</el-menu-item>
+      <el-menu-item index="3">我的消息</el-menu-item>
     </el-menu>
 
     <div v-for="(list,index) in housedata" :key="index" v-show="isShow1" >
@@ -24,6 +25,7 @@
           <span class="span1" style="text-align: center; position:absolute; margin-top: 300px;margin-left: 120px;font-size: 20px "  >{{list.area}}</span>
           <span class="span1" style="text-align: center; position:absolute; margin-top: 300px;margin-left: 350px;font-size: 20px "  >{{list.layer}}</span>
           <span class="span1" style="text-align: center; position:absolute; margin-top: 240px;margin-left: 600px;font-size: 45px;color: #e5121f;font-weight: bold;"  >{{list.cost}}<span style="font-size: 25px;color: #e5121f;font-weight: bold;">元/月</span></span>
+          <el-button @click="del(list)" type="primary" style="position: absolute;right: 50px;margin-top:20px">删除房源</el-button>
 <!--
           <span class="span1" style="text-align: center; position:absolute; margin-top: 244px;margin-left: 711px;font-size: 25px;color: #e5121f;font-weight: bold; "  >元/月</span>
 -->
@@ -43,14 +45,22 @@
       </div>
     </div>
   </div>
+
+
 </template>
 
 <script>
 import store from "@/store";
 import router from "@/router";
+import Element from "element-ui";
+import Myaside from "@/components/Myaside";
+import Myfooter from "@/components/Myfooter";
+import Mymain from "@/components/Mymain";
+import Myheader from "@/components/Myheader";
 
 export default {
   name: "staff",
+
   data(){
     return{
       activeIndex: '/staff',
@@ -70,6 +80,48 @@ export default {
        this.isShow1=false;
        this.isShow2=true;
      }
+
+    },
+    del(list) {
+      //在全局变量userlist里面加入这个人（根据id判断是否已存在）
+      //把全局变量的userinfo改成这个人
+      if (this.houseInfo.host == this.myInfo.username) {
+        if (confirm("确定删除吗")) {
+          let formdata = new FormData();
+          let config = {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+          formdata.append("id", this.houseInfo.id);
+          this.$axios.post('http://106.12.172.208/deletehouse', formdata, config).then(res => {
+            let msg = res.data;
+            if (msg == true) {
+              Element.Message.success("删除成功");
+              let formdata = new FormData();
+              let config = {
+                headers: {
+                  'Content-Type': 'multipart/form-data'
+                }
+              }
+              this.$axios.post('http://106.12.172.208/gethouse', formdata, config).then(res => {
+                let msg = res.data.msg;
+                //alert(JSON.stringify(msg[0]));
+                store.commit("setHouseData", {houseList: msg});
+              })
+              router.push('/goingorder');
+            } else {
+              Element.Message.error("删除失败请重试");
+            }
+          })
+        } else {
+
+        }
+
+      } else {
+        store.commit("addUser", {username: list.host});
+        router.push('/message');
+      }
     },
     done(qlist){
       //alert("被点了！");
