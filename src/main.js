@@ -17,9 +17,6 @@ Vue.prototype.$axios = axios;
 import qs from 'qs';
 /*全局绑定*/
 Vue.prototype.$qs = qs;
-/*引入mock数据*/
-require('./mock/LoginService.js')
-require('./mock/RegisterService.js')
 
 //import Store from './store/index';
 import Vuex from 'vuex'

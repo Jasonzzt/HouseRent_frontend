@@ -136,8 +136,8 @@ export default {
         this.$axios.post("http://106.12.172.208/uploadimage",form, config).then(res=>{
           let msg=res.data;
           if(msg==true) {
-            router.push('/housedata')
-            Element.Message.success("上传成功");
+
+            Element.Message.success("发布成功");
             let config = {
               headers: {
                 'Content-Type': 'multipart/form-data'
@@ -147,7 +147,9 @@ export default {
               let msg = res.data.msg;
               //alert(JSON.stringify(msg[0]));
               store.commit("setHouseData", {houseList: msg});
+
             })
+            router.push('/housedata')
           }
         })
         this.load=false;

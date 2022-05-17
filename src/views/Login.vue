@@ -110,7 +110,9 @@ export default {
               this.getData();
 
               /*跳转页面*/
-              router.push("/index")
+/*              while(this.$store.state.astate);
+              router.push("/index")*/
+
             }
             else if(codeconfirm==='false'){
               /*打印错误信息*/
@@ -151,13 +153,25 @@ export default {
       })
     },
     getData(){
+      //store.commit("setastate", {});
       let formdata=new FormData();
-      formdata.append("username",this.loginForm.username);
       let config = {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       }
+      this.$axios.post('http://106.12.172.208/gethouse', formdata,config).then(res => {
+        let msg1 = res.data.msg;
+        //alert(JSON.stringify(msg[0]));
+        store.commit("setHouseData", {houseList: msg1,that:this});
+      })
+ /*     while(this.$store.state.astate){
+        this.sleep(100);
+      }*/
+
+      formdata=new FormData();
+      formdata.append("username",this.loginForm.username);
+
       this.$axios.post('http://106.12.172.208/getuser', formdata,config).then(res =>{
         //alert("发回来了");
 
@@ -173,14 +187,19 @@ export default {
         store.commit("setData", {userName:username,img:img,name:name,userList:userlist,chatMessageList:chatmessagelist,that:this});
         store.commit("setWS",{});
       })
-       formdata=new FormData();
-      this.$axios.post('http://106.12.172.208/gethouse', formdata,config).then(res => {
-        let msg = res.data.msg;
-        //alert(JSON.stringify(msg[0]));
-        store.commit("setHouseData", {houseList: msg,that:this});
-      })
+      router.push("/index")
 
-    }
+
+    },
+    sleep(time) {
+      var timeStamp = new Date().getTime();
+      var endTime = timeStamp + time;
+      while (true) {
+        if (new Date().getTime() > endTime) {
+          return;
+        }
+      }
+    },
   },
   mounted() {
     // 页面渲染完成后执行获取验证码方法

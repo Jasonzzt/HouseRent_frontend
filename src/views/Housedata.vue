@@ -65,7 +65,7 @@
       <el-button style="position:absolute;bottom:50px;z-index: 10" type="primary" @click="$refs.drawer.closeDrawer()" >确定</el-button>
     </el-drawer>
 
-    <el-table :data="housedata"  stripe style="width: 100%; cursor: pointer;border-radius: 25px; " :show-header='false' >
+    <el-table :data="this.$store.state.houseList"  stripe style="width: 100%; cursor: pointer;border-radius: 25px; " :show-header='false' >
       <el-table-column  label="房子" >
         <template slot-scope="scope" >
           <div @click="moreInfo(scope.row)" >
@@ -191,7 +191,7 @@ export default {
       housedata:this.$store.state.houseList,
       top:[
         require('@/assets/1.jpg'),
-            require('@/assets/1.jpg'),
+        require('@/assets/1.jpg'),
         require('@/assets/1.jpg'),
         require('@/assets/1.jpg'),
       ]
@@ -226,6 +226,30 @@ export default {
     },
     cancelForm(){
       this.drawer = false;
+    },
+    getData(username){
+      let formdata=new FormData();
+      formdata.append("username",username);
+      let config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+      this.$axios.post('http://106.12.172.208/getuser', formdata,config).then(res =>{
+        //alert("发回来了");
+
+        let msg=res.data.msg;
+        //alert(msg);
+        let username=msg.username;
+        let img=msg.img;
+        let name=msg.name;
+        let userlist=msg.userlist;
+        let chatmessagelist=msg.chatmessagelist;
+        //alert(userlist[0].username);
+        store.commit("setData", {userName:username,img:img,name:name,userList:userlist,chatMessageList:chatmessagelist,that:this});
+        store.commit("setWS",{});
+      })
+
     }
 
     },
@@ -233,6 +257,22 @@ export default {
     housedata() {
       return store.state.houseList;
     }
+  },
+  mounted() {
+    let formdata=new FormData();
+    let config = {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }
+    this.$axios.post('http://106.12.172.208/gethouse', formdata,config).then(res => {
+      let msg = res.data.msg;
+      //alert(JSON.stringify(msg[0]));
+      store.commit("setHouseData", {houseList: msg,that:this});
+    })
+    const CheckId = this.$cookies.get("username");
+
+    this.getData(CheckId);
   }
 }
 

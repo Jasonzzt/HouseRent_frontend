@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Element from "element-ui";
 import Housedata from "@/views/Housedata";
+import router from "@/router";
 
 Vue.use(Vuex)
 
@@ -169,6 +170,7 @@ export default new Vuex.Store({
         q:"用户111的图片与实际严重不符！",
       }
     ],
+    astate:true
   },
   mutations: {
     setUserInfo(state, data) {
@@ -297,9 +299,8 @@ export default new Vuex.Store({
         state.userInfo.img=msg.img;
         state.userInfo.name=msg.name;
         state.userInfo.username=msg.username;
-        state.userList.append(state.userInfo);
+        state.userList.push(state.userInfo);
       })
-
 
     },
     addMessage(state, data) {
@@ -333,13 +334,15 @@ export default new Vuex.Store({
     setHouseData(state,data){
       state.houseList=data.houseList;
       state.athis=data.that;
+      //state.astate=false;
       let formdata=new FormData();
       let config = {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       }
-      formdata.append("username",state.myInfo.username);
+      const CheckId = this.$cookies.get("username");
+      formdata.append("username",CheckId);
       state.athis.$axios.post('http://106.12.172.208/getmarked',formdata,config).then(res =>{
         let msg=res.data;
         state.myHouseList.marked=msg;
@@ -425,6 +428,9 @@ export default new Vuex.Store({
     },
     refreshMyData(state,data){
       state.myInfo.name=data.newName;
+    },
+    setastate(state,data){
+      state.astate=true;
     }
     },
     actions: {},
