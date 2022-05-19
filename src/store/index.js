@@ -163,11 +163,13 @@ export default new Vuex.Store({
     questions:[
       {
         id:"123456",
-        q:"用户12345拿钱跑路了！",
+        username:'',
+        question:"用户12345拿钱跑路了！",
       },
       {
         id:"00000",
-        q:"用户111的图片与实际严重不符！",
+        username:'',
+        question:"用户111的图片与实际严重不符！",
       }
     ],
     astate:true
@@ -354,10 +356,10 @@ export default new Vuex.Store({
     },*/
     //删去问题
     delQuestion(state,data){
-      alert("删除信息,对应id为"+data.id);
+      //alert("删除信息,对应id为"+data.id);
       let i;
       for(i=0;i<state.questions.length;i++){
-        if(data.id==state.questions[i].id&&data.q==state.questions[i].q)
+        if(data.id==state.questions[i].id&&data.q==state.questions[i].question)
           delete state.questions[i];//会变为undefined
       }
     },
@@ -431,6 +433,9 @@ export default new Vuex.Store({
     },
     setastate(state,data){
       state.astate=true;
+    },
+    setquestion(state,data){
+      state.questions.push(data.question);
     }
     },
     actions: {},

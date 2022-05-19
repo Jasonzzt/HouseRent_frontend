@@ -85,7 +85,7 @@ export default {
     del(list) {
       //在全局变量userlist里面加入这个人（根据id判断是否已存在）
       //把全局变量的userinfo改成这个人
-      if (this.houseInfo.host == this.myInfo.username) {
+      if (true) {
         if (confirm("确定删除吗")) {
           let formdata = new FormData();
           let config = {
@@ -98,7 +98,7 @@ export default {
             let msg = res.data;
             if (msg == true) {
               Element.Message.success("删除成功");
-              let formdata = new FormData();
+              formdata = new FormData();
               let config = {
                 headers: {
                   'Content-Type': 'multipart/form-data'
@@ -109,25 +109,36 @@ export default {
                 //alert(JSON.stringify(msg[0]));
                 store.commit("setHouseData", {houseList: msg});
               })
-              router.push('/goingorder');
             } else {
               Element.Message.error("删除失败请重试");
             }
           })
-        } else {
-
         }
 
-      } else {
-        store.commit("addUser", {username: list.host});
-        router.push('/message');
       }
+
     },
     done(qlist){
       //alert("被点了！");
       var msg = "确定已处理问题，删除记录吗？\n请确认！";
       if (confirm(msg)==true){
         //alert('去删除');
+        let formdata=new FormData();
+        formdata.append('id',qlist.id);
+        let config = {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+        this.$axios.post('http://106.12.172.208/deletequestion', formdata, config).then(res =>{
+          let msg=res.data;
+          if(msg==true){
+            Element.Message.success("删除成功");
+          }
+          else{
+            Element.Message.error("删除失败请重试");
+          }
+        })
 
         store.commit("delQuestion",{id:qlist.id,q:qlist.q});
         return true;
@@ -147,6 +158,18 @@ export default {
     questions(){
       return store.state.questions;
     }
+  },
+  mounted(){
+    let formdata=new FormData();
+    let config = {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }
+    this.$axios.post('http://106.12.172.208/getquestion', formdata, config).then(res =>{
+      let msg=res.data;
+      this.$store.commit("setquestion",{question:msg});
+    })
   }
 }
 </script>
