@@ -75,19 +75,21 @@ export default {
         }
         else if(problem!=""){
           let r=confirm("请确认你的问题："+problem);
-         // alert("aaaa");
-          let formdata=new FormData();
-          formdata.append('username',this.$store.state.myInfo.username);
-          formdata.append('question',problem);
-          let config = {
-            headers: {
-              'Content-Type': 'multipart/form-data'
+          if(r){
+            let formdata=new FormData();
+            formdata.append('username',this.$store.state.myInfo.username);
+            formdata.append('question',problem);
+            let config = {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
             }
+            this.$axios.post('http://106.12.172.208/question', formdata,config).then(res => {
+              let msg = res.data;
+              if(msg==true)Element.Message.success('留言成功');
+            })
           }
-          this.$axios.post('http://106.12.172.208/question', formdata,config).then(res => {
-            let msg = res.data;
-            if(msg==true)Element.Message.success('留言成功');
-          })
+         // alert("aaaa");
         }
         else{
           alert("请输入内容");

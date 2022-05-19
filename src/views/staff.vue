@@ -10,7 +10,6 @@
         active-text-color="#ffd04b">
       <el-menu-item index="1">现有房源</el-menu-item>
       <el-menu-item index="2">用户投诉</el-menu-item>
-      <el-menu-item index="3">我的消息</el-menu-item>
     </el-menu>
 
     <div v-for="(list,index) in housedata" :key="index" v-show="isShow1" >
@@ -36,10 +35,10 @@
     <div v-for="(qlist,index1) in questions" :key="index1" v-show="isShow2" >
       <div style="background-color: #cccccc;" v-if="qlist.id!=undefined">
         <span style="font-size: 20px ">【用户id】</span>
-        <span style="font-size: 20px ">{{qlist.id}}</span>
+        <span style="font-size: 20px ">{{qlist.username}}</span>
         <br/>
         <span style="font-size: 20px ">【用户描述】</span>
-        <span style="font-size: 20px ">{{qlist.q}}</span>
+        <span style="font-size: 20px ">{{qlist.question}}</span>
         <button @click="done(qlist)" style="color: white;border-radius: 50px;background-color: green;position:absolute;right: 50px">已处理</button>
         <hr class="new1">
       </div>
@@ -93,7 +92,7 @@ export default {
               'Content-Type': 'multipart/form-data'
             }
           }
-          formdata.append("id", this.houseInfo.id);
+          formdata.append("id", list.id);
           this.$axios.post('http://106.12.172.208/deletehouse', formdata, config).then(res => {
             let msg = res.data;
             if (msg == true) {
@@ -140,7 +139,7 @@ export default {
           }
         })
 
-        store.commit("delQuestion",{id:qlist.id,q:qlist.q});
+        store.commit("delQuestion",{id:qlist.id,q:qlist.question});
         return true;
       }else{
         //alert('取消删除');

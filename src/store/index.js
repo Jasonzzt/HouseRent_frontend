@@ -343,7 +343,7 @@ export default new Vuex.Store({
           'Content-Type': 'multipart/form-data'
         }
       }
-      const CheckId = this.$cookies.get("username");
+      const CheckId = state.athis.$cookies.get("username");
       formdata.append("username",CheckId);
       state.athis.$axios.post('http://106.12.172.208/getmarked',formdata,config).then(res =>{
         let msg=res.data;
@@ -435,7 +435,7 @@ export default new Vuex.Store({
       state.astate=true;
     },
     setquestion(state,data){
-      state.questions.push(data.question);
+      state.questions=data.question;
     }
     },
     actions: {},
