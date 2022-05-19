@@ -269,12 +269,18 @@ export default new Vuex.Store({
       let i=0;//遍历
       for(i=0;i<state.houseList.length;i++){
         if(state.houseList[i].neighborhood.indexOf(data.neighborhood)>=0)//实现子字符串添加
+        {
           state.chosenList.push(state.houseList[i]);
+        }
       }
       if(state.chosenList.length==0){
         Element.Message.error("该小区暂无在租房产");
-        Housedata.data().housedata=state.houseList;//防止页面无数据
+        state.chosenList=state.houseList;//防止页面无数据
       }
+      else{
+        Element.Message.success("搜索成功")
+      }
+
     },
     //侧边栏添加用户
     addUser(state,data){
@@ -355,14 +361,14 @@ export default new Vuex.Store({
       state.questions.push(data.id,data.q);
     },*/
     //删去问题
-    delQuestion(state,data){
+/*    delQuestion(state,data){
       //alert("删除信息,对应id为"+data.id);
       let i;
       for(i=0;i<state.questions.length;i++){
-        if(data.id==state.questions[i].id&&data.q==state.questions[i].question)
-          delete state.questions[i];//会变为undefined
+        if(data.id==state.questions[i].id)
+          delete state.questions//会变为undefined
       }
-    },
+    },*/
     setWS(state, data,that) {
 
       state.ws = new WebSocket("ws://106.12.172.208/ws");

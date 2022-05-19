@@ -78,12 +78,12 @@ export default {
 
   mounted() {
 
-    const CheckId = this.$cookies.get("username");
+/*    const CheckId = this.$cookies.get("username");
 
     if(!CheckId){
       Element.Message.error("未登录");
       router.push('/')
-    }
+    }*/
     //alert("test")
     //alert(this.$store.state.houseList[0].host);
     //this.load=true;

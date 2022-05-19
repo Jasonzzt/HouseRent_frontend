@@ -65,7 +65,7 @@
       <el-button style="position:absolute;bottom:50px;z-index: 10" type="primary" @click="$refs.drawer.closeDrawer()" >确定</el-button>
     </el-drawer>
 
-    <el-table :data="this.$store.state.houseList"  stripe style="width: 100%; cursor: pointer;border-radius: 25px; " :show-header='false' >
+    <el-table :data="housedata"  stripe style="width: 100%; cursor: pointer;border-radius: 25px; " :show-header='false' >
       <el-table-column  label="房子" >
         <template slot-scope="scope" >
           <div @click="moreInfo(scope.row)" >
@@ -210,9 +210,8 @@ export default {
     },
     //搜索框，向后端传入输入的小区名，根据小区名显示房源列表
     research(){
-     // alert(this.input);
       store.commit("researchHouse",{neighborhood:this.input});
-      this.$data.housedata=this.$store.state.chosenList;
+      this.housedata=this.chosenList;
     },
     //抽屉关闭时
     handleClose(done) {
@@ -222,7 +221,7 @@ export default {
       //alert("?")
       //alert(this.value1[0])
       store.commit("selectHouse",{district:this.value1,type:this.value2,cost:this.value3});
-      this.$data.housedata=this.$store.state.chosenList;
+      this.$data.housedata=this.chosenList;
     },
     cancelForm(){
       this.drawer = false;
@@ -254,8 +253,11 @@ export default {
 
     },
   computed:{
-    housedata() {
+ /*   housedata() {
       return store.state.houseList;
+    },*/
+    chosenList(){
+      return store.state.chosenList;
     }
   },
   mounted() {

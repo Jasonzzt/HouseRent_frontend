@@ -74,7 +74,7 @@ export default {
           break;
         }
         else if(problem!=""){
-          let r=confirm("请确认你的问题："+problem);
+          r=confirm("请确认你的问题："+problem);
           if(r){
             let formdata=new FormData();
             formdata.append('username',this.$store.state.myInfo.username);

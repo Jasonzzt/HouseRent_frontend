@@ -133,13 +133,18 @@ export default {
           let msg=res.data;
           if(msg==true){
             Element.Message.success("删除成功");
+            formdata=new FormData();
+            this.$axios.post('http://106.12.172.208/getquestion', formdata, config).then(res =>{
+              let msg=res.data;
+              this.$store.commit("setquestion",{question:msg});
+            })
           }
           else{
             Element.Message.error("删除失败请重试");
           }
         })
 
-        store.commit("delQuestion",{id:qlist.id,q:qlist.question});
+        //store.commit("delQuestion",{id:qlist.id,q:qlist.question});
         return true;
       }else{
         //alert('取消删除');
@@ -159,6 +164,11 @@ export default {
     }
   },
   mounted(){
+    const CheckId = this.$cookies.get("service");
+    if(!CheckId){
+      Element.Message.error("非法进入后台管理系统");
+      router.push('/')
+    }
     let formdata=new FormData();
     let config = {
       headers: {
@@ -168,6 +178,11 @@ export default {
     this.$axios.post('http://106.12.172.208/getquestion', formdata, config).then(res =>{
       let msg=res.data;
       this.$store.commit("setquestion",{question:msg});
+    })
+    this.$axios.post('http://106.12.172.208/gethouse', formdata,config).then(res => {
+      let msg = res.data.msg;
+      //alert(JSON.stringify(msg[0]));
+      store.commit("setHouseData", {houseList: msg,that:this});
     })
   }
 }

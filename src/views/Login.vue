@@ -101,13 +101,14 @@ export default {
             //let result = JSON.parse(res.data.data);
             let message = res.data.msg;
             let codeconfirm=res.data.success;
+            let service=res.data.service;
             // 判断结果
             if (message==='true'&&codeconfirm==='true') {
               /*登陆成功*/
               Element.Message.success("登陆成功");
 
               /*获取用户信息*/
-              this.getData();
+              this.getData(service);
 
               /*跳转页面*/
 /*              while(this.$store.state.astate);
@@ -152,42 +153,60 @@ export default {
         this.codeImg = res.data.msg;
       })
     },
-    getData(){
-      //store.commit("setastate", {});
-      let formdata=new FormData();
-      let config = {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+    getData(service){
+      if(!service){
+        //store.commit("setastate", {});
+        let formdata=new FormData();
+        let config = {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
         }
+        this.$axios.post('http://106.12.172.208/gethouse', formdata,config).then(res => {
+          let msg1 = res.data.msg;
+          //alert(JSON.stringify(msg[0]));
+          store.commit("setHouseData", {houseList: msg1,that:this});
+        })
+        /*     while(this.$store.state.astate){
+               this.sleep(100);
+             }*/
+
+        formdata=new FormData();
+        formdata.append("username",this.loginForm.username);
+
+        this.$axios.post('http://106.12.172.208/getuser', formdata,config).then(res =>{
+          //alert("发回来了");
+
+          let msg=res.data.msg;
+          //alert(msg);
+          let username=msg.username;
+          let img=msg.img;
+          let name=msg.name;
+          let userlist=msg.userlist;
+          let chatmessagelist=msg.chatmessagelist;
+          //alert(userlist[0].username);
+
+          store.commit("setData", {userName:username,img:img,name:name,userList:userlist,chatMessageList:chatmessagelist,that:this});
+          store.commit("setWS",{});
+        })
+        router.push("/index")
+
       }
-      this.$axios.post('http://106.12.172.208/gethouse', formdata,config).then(res => {
-        let msg1 = res.data.msg;
-        //alert(JSON.stringify(msg[0]));
-        store.commit("setHouseData", {houseList: msg1,that:this});
-      })
- /*     while(this.$store.state.astate){
-        this.sleep(100);
-      }*/
-
-      formdata=new FormData();
-      formdata.append("username",this.loginForm.username);
-
-      this.$axios.post('http://106.12.172.208/getuser', formdata,config).then(res =>{
-        //alert("发回来了");
-
-        let msg=res.data.msg;
-        //alert(msg);
-        let username=msg.username;
-        let img=msg.img;
-        let name=msg.name;
-        let userlist=msg.userlist;
-        let chatmessagelist=msg.chatmessagelist;
-        //alert(userlist[0].username);
-
-        store.commit("setData", {userName:username,img:img,name:name,userList:userlist,chatMessageList:chatmessagelist,that:this});
-        store.commit("setWS",{});
-      })
-      router.push("/index")
+      else{
+        let formdata=new FormData();
+        let config = {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+        this.$axios.post('http://106.12.172.208/gethouse', formdata,config).then(res => {
+          let msg1 = res.data.msg;
+          //alert(JSON.stringify(msg[0]));
+          store.commit("setHouseData", {houseList: msg1,that:this});
+          store.commit("setWS",{});
+        })
+        router.push("/staff");
+      }
 
 
     },
