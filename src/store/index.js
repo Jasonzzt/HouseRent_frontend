@@ -259,6 +259,7 @@ export default new Vuex.Store({
       }
       else{
         //alert("数据源更换")
+        Element.Message.success("搜索成功")
         //Housedata.data().housedata=state.chosenList;
 
       }
@@ -278,7 +279,8 @@ export default new Vuex.Store({
         state.chosenList=state.houseList;//防止页面无数据
       }
       else{
-        Element.Message.success("搜索成功")
+        Element.Message.success("搜索成功");
+
       }
 
     },

@@ -186,9 +186,9 @@ export default {
 
       //抽屉效果
       drawer: false,
-
+      t:true,
       direction: 'ttb',
-      housedata:this.$store.state.houseList,
+      //housedata:this.$store.state.houseList,
       top:[
         require('@/assets/1.jpg'),
         require('@/assets/1.jpg'),
@@ -211,7 +211,7 @@ export default {
     //搜索框，向后端传入输入的小区名，根据小区名显示房源列表
     research(){
       store.commit("researchHouse",{neighborhood:this.input});
-      this.housedata=this.chosenList;
+      this.t=false;
     },
     //抽屉关闭时
     handleClose(done) {
@@ -221,7 +221,7 @@ export default {
       //alert("?")
       //alert(this.value1[0])
       store.commit("selectHouse",{district:this.value1,type:this.value2,cost:this.value3});
-      this.$data.housedata=this.chosenList;
+      this.t=false;
     },
     cancelForm(){
       this.drawer = false;
@@ -253,9 +253,12 @@ export default {
 
     },
   computed:{
- /*   housedata() {
+   housedata() {
+     if(this.t)
       return store.state.houseList;
-    },*/
+     else
+       return store.state.chosenList;
+    },
     chosenList(){
       return store.state.chosenList;
     }
