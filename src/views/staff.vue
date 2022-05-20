@@ -10,7 +10,17 @@
         active-text-color="#ffd04b">
       <el-menu-item index="1">现有房源</el-menu-item>
       <el-menu-item index="2">用户投诉</el-menu-item>
+      <template>
+        <div class="head_portrait">
+          <a href="#/usrInfo" class="user">
+            <span class="user_icon">
+              <el-avatar :src="this.$store.state.myInfo.img"></el-avatar>
+            </span>
+          </a>
+        </div>
+      </template>
     </el-menu>
+
 
     <div v-for="(list,index) in housedata" :key="index" v-show="isShow1" >
         <div style="margin-bottom:40px;background-color:#cccccc">
@@ -192,5 +202,9 @@ export default {
 hr.new1 {
   border-top: 1px ;
 }
-
+.head_portrait{
+  position: absolute;
+  right: 20px;
+  top: 10px;
+}
 </style>
