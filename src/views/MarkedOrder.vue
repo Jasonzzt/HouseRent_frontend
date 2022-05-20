@@ -25,6 +25,7 @@
 <script>
 import store from "@/store";
 import router from "@/router";
+import Element from "element-ui";
 
 export default {
   name: "MarkedOrder",
@@ -53,6 +54,13 @@ export default {
       return tmp;
     }
   },
+  mounted() {
+    const CheckId = this.$cookies.get("username");
+    if(!CheckId){
+      Element.Message.error("未登录");
+      router.push('/')
+    }
+  }
 
 }
 </script>

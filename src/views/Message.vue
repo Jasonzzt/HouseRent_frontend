@@ -15,6 +15,8 @@ import Myfooter from "@/components/Myfooter";
 import Mymain from "@/components/Mymain";
 import Myheader from "@/components/Myheader";
 import store from "../store/index";
+import Element from "element-ui";
+import router from "@/router";
 export default {
   components:{
     Myaside,
@@ -54,6 +56,11 @@ export default {
     }
   },
   mounted() {
+    const CheckId = this.$cookies.get("username");
+    if(!CheckId){
+      Element.Message.error("未登录");
+      router.push('/')
+    }
   }
   /*  computed: {
       ...mapState(["myInfo"])

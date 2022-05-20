@@ -91,6 +91,7 @@
 <script>
 import router from "@/router";
 import store from "../store/index";
+import Element from "element-ui";
 export default {
   name: "Housedata",
 
@@ -264,20 +265,29 @@ export default {
     }
   },
   mounted() {
-    let formdata=new FormData();
-    let config = {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    }
-    this.$axios.post('http://106.12.172.208/gethouse', formdata,config).then(res => {
-      let msg = res.data.msg;
-      //alert(JSON.stringify(msg[0]));
-      store.commit("setHouseData", {houseList: msg,that:this});
-    })
     const CheckId = this.$cookies.get("username");
+    if(!CheckId){
+      Element.Message.error("未登录");
+      router.push('/')
+    }
+    else{
+      let formdata=new FormData();
+      let config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+      this.$axios.post('http://106.12.172.208/gethouse', formdata,config).then(res => {
+        let msg = res.data.msg;
+        //alert(JSON.stringify(msg[0]));
+        store.commit("setHouseData", {houseList: msg,that:this});
+      })
+      this.getData(CheckId);
+    }
 
-    this.getData(CheckId);
+    //const CheckId = this.$cookies.get("username");
+
+
   }
 }
 

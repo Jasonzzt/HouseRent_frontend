@@ -170,6 +170,13 @@ export default {
     onSuccess(res){
 
     }
+  },
+  mounted() {
+    const CheckId = this.$cookies.get("username");
+    if(!CheckId){
+      Element.Message.error("未登录");
+      router.push('/')
+    }
   }
 
 }

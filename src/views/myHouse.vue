@@ -20,6 +20,8 @@
 
 <script>
 import store from "@/store";
+import Element from "element-ui";
+import router from "@/router";
 
 export default {
   name: "myHouse",
@@ -32,6 +34,13 @@ export default {
   computed:{
     housedata(){
       return store.state.houseList;
+    }
+  },
+  mounted() {
+    const CheckId = this.$cookies.get("username");
+    if(!CheckId){
+      Element.Message.error("未登录");
+      router.push('/')
     }
   }
 }

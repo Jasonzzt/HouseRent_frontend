@@ -78,30 +78,12 @@ export default {
 
   mounted() {
 
-/*    const CheckId = this.$cookies.get("username");
+    const CheckId = this.$cookies.get("username");
 
     if(!CheckId){
       Element.Message.error("未登录");
       router.push('/')
-    }*/
-    //alert("test")
-    //alert(this.$store.state.houseList[0].host);
-    //this.load=true;
-/*    let formdata=new FormData();
-    let config = {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
     }
-    this.$axios.post('http://106.12.172.208/gethouse', formdata,config).then(res => {
-      let msg = res.data.msg;
-      alert("house1")
-      //alert(JSON.stringify(msg[0]));
-      store.commit("setHouseData", {houseList: msg,that:this});
-    })*/
-    //this.getData(this.$store.state.myInfo.username);
-    //while(this.$store.state.astate);
-    //this.load=false;
   }
 };
 </script>
