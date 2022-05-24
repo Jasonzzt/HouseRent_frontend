@@ -1,4 +1,4 @@
-# admin-vue
+# frontend
 ### 软工导论课实践（前端部分）：住房租赁平台
 前端框架：vue\
 后端框架：Spring-boot
@@ -26,8 +26,8 @@ npm run serve
 npm run build
 ```
 ## 项目总览
-### 前端项目展示
-<http://180.76.113.48/dist/#/>
+### 项目展示
+<http://119.3.176.243/dist/index.html#/>
 
 ### 后端项目链接
-<https://github.com/SEUCocoding/>
+<https://github.com/MyWhiteLip/backend>
